@@ -1,0 +1,59 @@
+CREATE TABLE Student1
+(
+Id INT,
+[Name] VARCHAR (50),
+[Location] VARCHAR(50),
+Mark INT
+)
+
+INSERT INTO Student1(Id, [Name], [Location])
+VALUES (1,'Hari','KTYM')
+
+INSERT INTO Student1(Id, [Name], [Location])
+VALUES (2,'Narayana','EKM')
+
+INSERT INTO Student1(Id, [Name], [Location])
+VALUES (3,'Ruby','TVM')
+
+INSERT INTO Student1(Id, [Name], [Location])
+VALUES (4,'Christina','KTYM')
+
+INSERT INTO Student1(Id, [Name], [Location], Mark)
+VALUES (5,'Vrindha','TVM',81)
+
+INSERT INTO Student1(Id, [Name], [Location], Mark)
+VALUES (6,'Ayisha','KLM',61)
+
+INSERT INTO Student1(Id, [Name], [Location], Mark)
+VALUES (5,'Jubiya','TVM',100)
+
+
+UPDATE Student1
+SET Mark = 45 
+WHERE Id = 1
+
+UPDATE Student1
+SET Mark = 57
+WHERE Id = 2
+
+UPDATE Student1
+SET Mark = 85
+WHERE Id = 4
+
+UPDATE Student1
+SET Mark = 77
+WHERE Id = 3
+
+
+SELECT *,
+CASE
+WHEN Mark < 50 THEN 'F'
+WHEN Mark < 70 THEN 'C'
+WHEN Mark < 80 THEN 'B'
+WHEN Mark < 90 THEN 'A'
+ELSE 'A+'
+END AS Grades
+FROM Student1
+
+
+DROP TABLE Student1
