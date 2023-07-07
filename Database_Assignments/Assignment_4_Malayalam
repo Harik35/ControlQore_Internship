@@ -1,0 +1,23 @@
+CREATE TABLE studentname_lang
+(
+Id INT IDENTITY(1,1),
+[Name] NVARCHAR(100)
+)
+
+INSERT INTO studentname_lang([Name])
+VALUES (N'ഹരി')
+INSERT INTO studentname_lang([Name])
+VALUES (N'നാരായണൻ')
+INSERT INTO studentname_lang([Name])
+VALUES (N'റൂബി')
+INSERT INTO studentname_lang([Name])
+VALUES (N'അയിഷ')
+INSERT INTO studentname_lang([Name])
+VALUES (N'ജൂബിയ')
+INSERT INTO studentname_lang([Name])
+VALUES (N'ക്രിസ്റ്റീന')
+ 
+
+SELECT * FROM studentname_lang
+
+DROP TABLE studentname_lang
