@@ -1,0 +1,53 @@
+CREATE TABLE studentRecord
+(Id INT PRIMARY KEY IDENTITY(1,1),
+[Name] VARCHAR(MAX),
+Class VARCHAR(10),
+Division CHAR(1),
+Mark INT,
+)
+
+INSERT INTO  studentRecord([Name],Class,Division, Mark)
+VALUES ('Natasha Romonoff','4th','B',35)
+
+INSERT INTO  studentRecord([Name],Class,Division, Mark)
+VALUES ('Tony Stark','10th','A',98)
+
+INSERT INTO  studentRecord([Name],Class,Division)
+VALUES ('Steve Rogers','8th','D')
+
+INSERT INTO  studentRecord([Name],Class,Division,Mark)
+VALUES ('Bruce Banner','12th','H',76)
+
+
+
+INSERT INTO  studentRecord([Name],Class,Division)
+VALUES ('Thor','2nd','B')
+
+INSERT INTO  studentRecord([Name],Class,Division, Mark)
+VALUES ('Steven Strange','8th','B',95)
+
+INSERT INTO  studentRecord([Name],Class,Division, Mark)
+VALUES ('Peter Parker','10th','D',93)
+
+
+--Showing all student details
+SELECT *,
+CASE 
+WHEN Mark < 50 OR Mark IS NULL THEN 'Failed'
+ELSE 'Pass'
+END AS Result
+FROM studentRecord
+
+
+--Showing failed student details
+SELECT *, 'Failed' AS Remark
+FROM studentRecord
+WHERE Mark < 50 OR Mark IS NULL
+
+--Showing Passed student details
+SELECT *, 'Passed' AS Remark
+FROM studentRecord
+WHERE Mark > 50 AND Mark IS NOT NULL
+
+
+DROP TABLE studentRecord
