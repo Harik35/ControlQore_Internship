@@ -1,0 +1,98 @@
+CREATE TABLE bookstore
+(
+Id INT PRIMARY KEY IDENTITY(1,1),
+[Name] VARCHAR (60),
+Author VARCHAR (60),
+Release_Year INT,
+Ratings FLOAT,
+Pages INT,
+Created_On DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
+VALUES ('Harry Potter and The Philosopher''s Stone', 'J K Rowling', 1997, 7.4, 400, '2000/04/01')
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
+VALUES ( 'The Hobbit', ' John Ronald Reuel Tolkien', 1937, 8.8, 570, '2023/07/10')
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
+VALUES ('The Lord of the Rings', ' John Ronald Reuel Tolkien', 1954, 6.8, 1070,'2023/07/03')
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
+VALUES ('The Fellowship of the Ring', ' John Ronald Reuel Tolkien', 1954, 2.7, 1070, '2023/06/25')
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
+VALUES ('Harry Potter and The Chamber of Secrets', 'J K Rowling', 1998, 8.0, 350,'2022/06/15')
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
+VALUES ('Harry Potter and The Prisoner of Azkaban', 'J K Rowling', 1999, 9.1, 560, '2023/04/03')
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
+VALUES ('Harry Potter and The Goblet of Fire', 'J K Rowling', 2001, 8.2, 420, '2022/12/30')
+
+SELECT *,
+CONVERT (varchar(20), Created_On, 5) AS [DD/MM/YYYY],
+DAY(Created_On) AS [DAY],
+DATENAME (dw, Created_On) AS [DAY_2],
+CASE
+WHEN Ratings < 5 THEN 'NOT SO GOOD'
+WHEN Ratings > 5 AND Ratings < 6 THEN 'JUST FOR TIMEPASS'
+WHEN Ratings >= 6 AND Ratings < 7 THEN 'GOOD'
+WHEN Ratings >= 7 AND Ratings < 8 THEN 'SUPER'
+WHEN Ratings >= 8 AND Ratings < 9 THEN 'EXCELLENT'
+WHEN Ratings >= 9 AND Ratings < 10 THEN 'OUTSTANDING'
+END AS Remarks
+FROM bookstore
+
+
+CREATE TABLE customer_details
+(
+Customer_Id INT PRIMARY KEY IDENTITY(1,1),
+Customer_Name VARCHAR(60),
+Customer_Email VARCHAR(60),
+Book_Id INT,
+CONSTRAINT FK_Book_id FOREIGN KEY (Book_Id) 
+REFERENCES bookstore (Id),
+AGE INT,
+CONSTRAINT CHK_Age_Limit 
+CHECK  (AGE >=18 )
+)
+
+
+INSERT INTO customer_details (Customer_Name, Customer_Email,Book_Id, AGE)
+VALUES('Hari','hari@gamil.com',1,19)
+INSERT INTO customer_details (Customer_Name, Customer_Email,Book_Id, AGE)
+VALUES('John','john@gamil.com',7,20)
+INSERT INTO customer_details (Customer_Name, Customer_Email,Book_Id, AGE)
+VALUES('Steve','captain@gamil.com',3,42)
+INSERT INTO customer_details (Customer_Name, Customer_Email,Book_Id, AGE)
+VALUES('Hari','hari@gamil.com',1,23)
+
+SELECT * FROM customer_details
+
+
+
+DROP TABLE bookstore
+DROP TABLE customer_details
+
+
+CREATE TABLE order_details
+(
+Order_Id INT PRIMARY KEY IDENTITY(1,1),
+Customer_Name VARCHAR(60),
+Purchased_Item INT,
+CONSTRAINT FK_Purchase_id FOREIGN KEY (Purchased_Item) 
+REFERENCES bookstore (Id),
+Quantity INT
+CONSTRAINT CHK_Quantity
+CHECK  (Quantity >=2 )
+)
+
+INSERT INTO order_details(Customer_Name,Purchased_Item,Quantity)
+VALUES('Steve',2,3)
+INSERT INTO order_details(Customer_Name,Purchased_Item,Quantity)
+VALUES('Hari',1,5)
+INSERT INTO order_details(Customer_Name,Purchased_Item,Quantity)
+VALUES('Peter',4,2)
+
+SELECT * FROM order_details
