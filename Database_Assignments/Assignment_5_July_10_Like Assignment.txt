@@ -1,0 +1,84 @@
+
+CREATE TABLE Employee_Details
+(
+Empolyee_Id INT PRIMARY KEY IDENTITY(1,1),
+[Name] VARCHAR (60),
+Position VARCHAR (60),
+Joining_Date DATETIME DEFAULT SYSDATETIMEOFFSET (),
+Experience INT,
+)
+
+
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Hari', 'Intern', '2023/07/03', 0)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Jubiya', 'Intern', '2023/07/10', 0)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Narayana', 'Intern', '2023/06/25', 0)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Ayisha', 'Intern', '2023/06/20', 0)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Ruby', 'Intern', '2023/07/03', 0)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Christina', 'Intern', '2023/07/25', 0)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Zameel', 'Senior Developer', '2023/01/07', 4)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Avin', 'Senior Developer', '2023/01/07', 2)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Sanal', 'Senior Developer', '2022/02/10', 8)
+
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('John Wick', 'Senior Developer', '2022/02/10', 8)
+
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Johnson', 'Senior Developer', '2022/02/10', 8)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('John Honai', 'Senior Developer', '2022/02/10', 8)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Honai John', 'Senior Developer', '2022/02/10', 8)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Baba Yaga-John Wick', 'Senior Developer', '2022/02/10', 8)
+
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Martin Alex Luther', 'Senior Developer', '2022/02/10', 8)
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('Martin Deo Luther', 'Senior Developer', '2022/02/10', 8)
+
+INSERT INTO Employee_Details([Name], Position, Joining_Date, Experience)
+VALUES('ficti%onal Name', 'Senior Developer', '2023/01/07', 2)
+
+--SELECTING ALL EMPLOYEE
+SELECT *
+FROM Employee_Details 
+
+--SELECTING RECORD WHO'S NAME START WITH 'JOHN'
+SELECT *FROM Employee_Details
+WHERE [Name] LIKE 'John%'
+
+--SELECTING RECORD WHO'S NAME ENDS WITH 'JOHN'
+SELECT *FROM Employee_Details
+WHERE [Name] LIKE '%John'
+
+--SELECTING RECORD WHO'S NAME HAVE 'JOHN' ANYWHERE
+SELECT *FROM Employee_Details
+WHERE [Name] LIKE '%John%'
+
+----SELECTING RECORD WHO'S NAME START WITH A AND ENDS WITH N
+SELECT *FROM Employee_Details
+WHERE [Name] LIKE 'A%N' 
+
+--SELECTING RECORD WHO HAVE ALEX OR DEO ANYWHERE IN NAME COLUMN
+SELECT *FROM Employee_Details
+WHERE [Name] LIKE '%alex%' OR [Name] LIKE '%deo%' 
+
+
+--SELECTING NAME HAVING "%" SYMBOL
+SELECT * FROM 
+Employee_Details
+WHERE [Name] LIKE '%[%]%'
+
+
+
+
+DROP TABLE Employee_Details
