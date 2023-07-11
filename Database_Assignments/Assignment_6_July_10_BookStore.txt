@@ -6,11 +6,12 @@ Author VARCHAR (60),
 Release_Year INT,
 Ratings FLOAT,
 Pages INT,
-Created_On DATETIME DEFAULT CURRENT_TIMESTAMP
+Created_On DATETIME 
+CONSTRAINT DT_DATETIIME DEFAULT GETUTCDATE()
 )
 
-INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
-VALUES ('Harry Potter and The Philosopher''s Stone', 'J K Rowling', 1997, 7.4, 400, '2000/04/01')
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages)
+VALUES ('Harry Potter and The Philosopher''s Stone', 'J K Rowling', 1997, 7.4, 400)
 
 INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
 VALUES ( 'The Hobbit', ' John Ronald Reuel Tolkien', 1937, 8.8, 570, '2023/07/10')
@@ -25,24 +26,11 @@ INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
 VALUES ('Harry Potter and The Chamber of Secrets', 'J K Rowling', 1998, 8.0, 350,'2022/06/15')
 
 INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
-VALUES ('Harry Potter and The Prisoner of Azkaban', 'J K Rowling', 1999, 9.1, 560, '2023/04/03')
+VALUES ('Harry Potter and The Prisoner of Azkaban', 'J K Rowling', 1999, 9.1, 560, '2003/04/03')
 
 INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On)
-VALUES ('Harry Potter and The Goblet of Fire', 'J K Rowling', 2001, 8.2, 420, '2022/12/30')
+VALUES ('Harry Potter and The Goblet of Fire', 'J K Rowling', 2001, 8.2, 420, '2022/01/30')
 
-SELECT *,
-CONVERT (varchar(20), Created_On, 5) AS [DD/MM/YYYY],
-DAY(Created_On) AS [DAY],
-DATENAME (dw, Created_On) AS [DAY_2],
-CASE
-WHEN Ratings < 5 THEN 'NOT SO GOOD'
-WHEN Ratings > 5 AND Ratings < 6 THEN 'JUST FOR TIMEPASS'
-WHEN Ratings >= 6 AND Ratings < 7 THEN 'GOOD'
-WHEN Ratings >= 7 AND Ratings < 8 THEN 'SUPER'
-WHEN Ratings >= 8 AND Ratings < 9 THEN 'EXCELLENT'
-WHEN Ratings >= 9 AND Ratings < 10 THEN 'OUTSTANDING'
-END AS Remarks
-FROM bookstore
 
 
 CREATE TABLE customer_details
@@ -68,12 +56,7 @@ VALUES('Steve','captain@gamil.com',3,42)
 INSERT INTO customer_details (Customer_Name, Customer_Email,Book_Id, AGE)
 VALUES('Hari','hari@gamil.com',1,23)
 
-SELECT * FROM customer_details
 
-
-
-DROP TABLE bookstore
-DROP TABLE customer_details
 
 
 CREATE TABLE order_details
@@ -95,4 +78,46 @@ VALUES('Hari',1,5)
 INSERT INTO order_details(Customer_Name,Purchased_Item,Quantity)
 VALUES('Peter',4,2)
 
+
+--BOOKS AND ITS REVIEWS
+SELECT *,
+CONVERT (varchar(20), Created_On, 5) AS [DD/MM/YYYY],
+--DATENAME (dw, Created_On) AS [DAY_2],
+--Created_On AT TIME ZONE 'India Standard Time' AS 'Created_Indian time',
+--Created_On AT TIME ZONE 'Eastern Standard Time' AS 'Created_American time',
+CASE
+WHEN Ratings < 5 THEN 'NOT SO GOOD'
+WHEN Ratings > 5 AND Ratings < 6 THEN 'JUST FOR TIMEPASS'
+WHEN Ratings >= 6 AND Ratings < 7 THEN 'GOOD'
+WHEN Ratings >= 7 AND Ratings < 8 THEN 'SUPER'
+WHEN Ratings >= 8 AND Ratings < 9 THEN 'EXCELLENT'
+WHEN Ratings >= 9 AND Ratings < 10 THEN 'OUTSTANDING'
+END AS Remarks
+FROM bookstore
+
+
 SELECT * FROM order_details
+SELECT * FROM customer_details
+
+--CREATED ON LAST YEAR
+SELECT * 
+FROM bookstore
+WHERE Created_On > '2022-07-01'
+
+
+----CREATED ON MONDAYS OF LAST YEAR 
+SELECT *
+FROM bookstore
+WHERE DATENAME (dw, Created_On) = 'MONDAY' AND Created_On > '2022-07-01'
+
+
+SELECT * FROM bookstore
+
+
+
+DROP TABLE bookstore
+DROP TABLE customer_details
+DROP TABLE order_details
+
+
+SELECT * FROM sys.time_zone_info
