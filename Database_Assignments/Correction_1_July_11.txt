@@ -1,0 +1,115 @@
+CREATE TABLE bookstore
+(
+Id INT PRIMARY KEY IDENTITY(1,1),
+[Name] VARCHAR (60),
+Author VARCHAR (60),
+Release_Year INT,
+Ratings FLOAT,
+Pages INT,
+Created_On DATETIME 
+CONSTRAINT DT_DATETIIME DEFAULT GETUTCDATE(),
+Price INT
+)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Price)
+VALUES ('Harry Potter and The Philosopher''s Stone', 'J K Rowling', 1997, 7.4, 400,399)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On, Price)
+VALUES ( 'The Hobbit', ' John Ronald Reuel Tolkien', 1937, 8.8, 570, '2023/07/10',299)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On, Price)
+VALUES ('The Lord of the Rings', ' John Ronald Reuel Tolkien', 1954, 6.8, 1070,'2023/07/03',499)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On,Price)
+VALUES ('The Fellowship of the Ring', ' John Ronald Reuel Tolkien', 1954, 2.7, 1070, '2023/06/25',399)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On, Price)
+VALUES ('Harry Potter and The Chamber of Secrets', 'J K Rowling', 1998, 8.0, 350,'2022/06/15', 599)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On, Price)
+VALUES ('Harry Potter and The Prisoner of Azkaban', 'J K Rowling', 1999, 9.1, 560, '2003/04/03', 599)
+
+INSERT INTO bookstore([Name], Author, Release_Year, Ratings, Pages, Created_On, Price)
+VALUES ('Harry Potter and The Goblet of Fire', 'J K Rowling', 2001, 8.2, 420, '2022/01/30', 399)
+
+
+--------########################################-------------------------
+CREATE TABLE customer_details
+(
+Customer_Id INT PRIMARY KEY IDENTITY(1,1),
+Customer_Name VARCHAR(60),
+Customer_Email VARCHAR(60),
+AGE INT,
+CONSTRAINT CHK_Age_Limit 
+CHECK  (AGE >=18 )
+)
+
+
+INSERT INTO customer_details (Customer_Name, Customer_Email, AGE)
+VALUES('Hari','hari@gamil.com',19)
+INSERT INTO customer_details (Customer_Name, Customer_Email, AGE)
+VALUES('John','john@gamil.com',20)
+INSERT INTO customer_details (Customer_Name, Customer_Email, AGE)
+VALUES('Steve','captain@gamil.com',42)
+INSERT INTO customer_details (Customer_Name, Customer_Email,AGE)
+VALUES('Hari','hari@gamil.com',23)
+
+---------------#################################################--------------------------
+CREATE TABLE order_details
+(
+Order_Id INT
+CONSTRAINT PK_ORDR_ID PRIMARY KEY IDENTITY(1,1),
+Cstmr_id INT,
+CONSTRAINT FK_ODR_DETLS FOREIGN KEY (Cstmr_id)
+REFERENCES customer_details(Customer_Id)
+
+)
+
+INSERT INTO order_details(Cstmr_id)
+VALUES(3)
+INSERT INTO order_details(Cstmr_id)
+VALUES(4)
+INSERT INTO order_details(Cstmr_id)
+VALUES(1)
+INSERT INTO order_details(Cstmr_id)
+VALUES(2)
+
+
+----##########################################################----------------------
+
+CREATE TABLE order_items
+(
+item_list INT
+CONSTRAINT PK_Item_list PRIMARY KEY IDENTITY(1,1),
+bk_id INT,
+CONSTRAINT FK_BK_ID FOREIGN KEY(bk_id)
+REFERENCES bookstore(Id),
+Quantity INT,
+od_det INT,
+CONSTRAINT FK_ORDR_DETLS FOREIGN KEY (od_det)
+REFERENCES order_details(Order_Id)
+)
+
+INSERT INTO order_items(bk_id, Quantity, od_det)
+VALUES(2,4,1)
+INSERT INTO order_items(bk_id, Quantity, od_det)
+VALUES(3,2,2)
+INSERT INTO order_items(bk_id, Quantity, od_det)
+VALUES(2,5,3)
+INSERT INTO order_items(bk_id, Quantity, od_det)
+VALUES(2,1,1)
+
+
+
+
+
+
+SELECT * FROM bookstore
+SELECT * FROM customer_details
+SELECT * FROM order_details
+SELECT * FROM order_items
+
+DROP TABLE bookstore
+DROP TABLE customer_details
+DROP TABLE order_details
+DROP TABLE order_items
