@@ -43,11 +43,11 @@ ON CA.CustomerID = C.CustomerID
 WHERE A.City = 'Dallas'
 
 -----How many items with ListPrice more than $1000 have been sold?-------
-SELECT COUNT (*) AS ITEM_COUNT
+SELECT COUNT(DISTINCT P.ProductID)
 FROM SalesLT.Product AS P
 INNER JOIN SalesLT.SalesOrderDetail AS SOD
 ON P.ProductID = SOD.ProductID
-WHERE P.ListPrice > 1000
+WHERE P.ListPrice > 1000 
 
 ------Give the CompanyName of those customers with orders over $100000. Include the subtotal plus tax plus freight----------
 SELECT C.CompanyName
@@ -79,9 +79,16 @@ GROUP BY C.CompanyName
 
 
 -----“Single Item Order” is a customer order where only one item is ordered. Show the SalesOrderID and the UnitPrice for every Single Item Order---------
-SELECT DISTINCT SOD.SalesOrderDetailID, SOD.UnitPrice 
-FROM  SalesLT.SalesOrderDetail AS SOD
-WHERE SOD.OrderQty = 1
+SELECT SOD.SalesOrderID, SOD.UnitPrice
+FROM SalesLT.SalesOrderDetail AS SOD
+WHERE SOD.SalesOrderID IN 
+(
+SELECT SOD.SalesOrderID
+FROM SalesLT.SalesOrderDetail AS SOD
+GROUP BY SOD.SalesOrderID
+HAVING COUNT(*) = 1
+)
+
 
 
 ----Show the product description for culture ‘fr’ for product with ProductID 736.----
@@ -94,6 +101,16 @@ ON PMD.ProductModelID = pm.ProductModelID
 INNER JOIN SalesLT.ProductDescription AS PD
 ON  PD.ProductDescriptionID  = PMD.ProductDescriptionID
 WHERE P.ProductID = 736
+
+
+
+----------6.How many items that have'nt sold been sold?------------
+
+SELECT COUNT(*)
+FROM SalesLT.Product AS P
+LEFT JOIN SalesLT.SalesOrderDetail AS SOD
+ON P.ProductID = SOD.ProductID
+WHERE SOD.SalesOrderID IS NULL
 
 
 
