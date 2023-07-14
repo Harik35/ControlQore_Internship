@@ -1,0 +1,117 @@
+----1.
+--SELECT SOD.SalesOrderID, SOD.SalesOrderDetailID, SOD.OrderQty, P.Weight ,(P.Weight*SOD.OrderQty) AS 'Net Wieght'
+--FROM SalesLT.SalesOrderDetail AS SOD
+--INNER JOIN SalesLT.Product AS P
+--	ON SOD.ProductID = P.ProductID
+
+---ANSWER-CORRECT
+SELECT SOD.SalesOrderID , C.CompanyName, SUM((P.Weight*SOD.OrderQty)) AS 'Net Wieght'
+FROM SalesLT.SalesOrderDetail AS SOD
+	INNER JOIN SalesLT.Product AS P
+		ON SOD.ProductID = P.ProductID
+	INNER JOIN SalesLT.SalesOrderHeader AS SOH
+		ON SOH.SalesOrderID = SOD.SalesOrderID
+	INNER JOIN SalesLT.Customer AS C
+		ON C.CustomerID = SOH.CustomerID
+	GROUP BY SOD.SalesOrderID, SOH.SubTotal,C.CompanyName
+
+
+
+
+----2.-- WATCH AGAIN
+SELECT COUNT(*) 
+FROM SalesLT.ProductCategory AS PC
+	INNER JOIN SalesLT.Product AS P
+		ON PC.ProductCategoryID = P.ProductCategoryID
+	INNER JOIN SalesLT.SalesOrderDetail AS SOD
+		ON SOD.ProductID = P.ProductID
+	INNER JOIN SalesLT.SalesOrderHeader AS SOH
+		ON SOH.SalesOrderID = SOD.SalesOrderID
+	INNER JOIN SalesLT.Address AS A
+		ON A.AddressID = SOH.BillToAddressID
+WHERE PC.Name = 'CRANKSETS' AND A.City = 'LONDON'
+
+
+----3.--WATCH AGAIN
+SELECT  CA.CustomerID, A.City, A.AddressLine1, CA.AddressType
+FROM SalesLT.CustomerAddress AS CA
+	INNER JOIN SalesLT.Customer AS C
+		ON C.CustomerID = CA.CustomerID
+	INNER JOIN SalesLT.Address AS A
+		ON A.AddressID = CA.AddressID
+WHERE  A.City = 'DALLAS'
+GROUP BY CA.CustomerID, A.City, A.AddressLine1, CA.AddressType
+
+---------------
+ 
+ CA.CustomerID, A.City, A.AddressLine1, CA.AddressType, A.AddressLine1
+
+SELECT *
+FROM SalesLT.CustomerAddress AS CA
+	INNER JOIN SalesLT.Customer AS C
+		ON C.CustomerID = CA.CustomerID
+	INNER JOIN SalesLT.Address AS A
+		ON A.AddressID = CA.AddressID
+	LEFT JOIN SalesLT.CustomerAddress AS CA2
+		ON CA2.AddressID = A.AddressID
+WHERE  A.City = 'DALLAS' AND CA.AddressType = 'MAIN OFFICE'
+
+
+
+
+
+-----4.
+
+---A.
+SELECT SOH.SalesOrderID, SOH.SubTotal
+FROM SalesLT.SalesOrderHeader AS SOH
+
+---B.
+SELECT SalesOrderID, SUM(SOD.OrderQty*SOD.UnitPrice) AS 'SubTotal_UNITPRICE'
+FROM SalesLT.SalesOrderDetail AS SOD
+GROUP BY SOD.SalesOrderID
+
+---C.
+SELECT SOD.SalesOrderID, SUM(P.ListPrice*SOD.OrderQty) AS 'SubTotal_LIST PRICE',SUM(SOD.OrderQty*SOD.UnitPrice) AS 'SubTotal_UNITPRICE'
+FROM SalesLT.SalesOrderDetail AS SOD
+	INNER JOIN SalesLT.Product AS P
+		ON P.ProductID = SOD.ProductID
+GROUP BY SalesOrderID,
+
+
+
+---5. LIST PRICE - STANDARD COST
+SELECT SOD.ProductID, SUM(sod.OrderQty* (P.ListPrice-P.StandardCost) )AS 'PROFIT PER PIECE' 
+FROM SalesLT.Product AS P
+	INNER JOIN SalesLT.SalesOrderDetail AS SOD
+		ON P.ProductID = SOD.ProductID
+GROUP BY SOD.ProductID
+--HAVING SOD.ProductID = 886
+ORDER BY 'PROFIT PER PIECE' DESC 
+
+SELECT SOD.ProductID, COUNT(*)
+FROM SalesLT.SalesOrderDetail AS SOD
+	INNER JOIN SalesLT.Product AS P
+		ON P.ProductID = SOD.ProductID
+	GROUP BY SOD.ProductID
+
+SELECT *
+FROM SalesLT.SalesOrderDetail AS SOD
+	INNER JOIN SalesLT.Product AS P
+		ON P.ProductID = SOD.ProductID
+		WHERE 
+	--GROUP BY SOD.ProductID
+
+
+SELECT *
+FROM SalesLT.CustomerAddress AS CA
+	INNER JOIN SalesLT.Customer AS C
+		ON C.CustomerID = CA.CustomerID
+
+WHERE 
+
+	INNER JOIN SalesLT.Address AS A
+		ON A.AddressID = CA.AddressID
+	LEFT JOIN SalesLT.CustomerAddress AS CA2
+		ON CA2.AddressID = A.AddressID
+WHERE  A.City = 'DALLAS' AND CA.AddressType = 'MAIN OFFICE'
