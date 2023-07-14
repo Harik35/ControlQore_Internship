@@ -1,0 +1,53 @@
+---1. What is the Name, ProductID and Weight for the item with Product Number 'RM-M823'---
+
+SELECT  P.Name, P.ProductID, P.Weight
+FROM Production.Product AS P
+WHERE P.ProductNumber = 'RM-M823'
+
+--2. List products with weight greater than 500. For those products, show the following information: Product ID, Name, ListPrice and calculated Gross Margin (difference between list price and standard cost)------------
+SELECT P.ProductID,P.Name, P.ListPrice, P.StandardCost, (P.ListPrice- P.StandardCost) AS 'Gross Margin'
+FROM Production.Product AS P
+WHERE P.Weight >500
+
+
+--3. How many Products are there with the standard weight between 400 and 500--------------------------------------
+SELECT COUNT(*)
+FROM Production.Product AS P
+WHERE P.Weight < 500 AND P.Weight >400  
+
+
+--4. How many Yellow colored bikes are there (Bikes can be identified by the Product number starting with 'BK')--------------
+SELECT COUNT(*)
+FROM Production.Product AS P
+WHERE P.ProductNumber LIKE 'BK%' 
+AND P.Color = 'YELLOW'
+
+
+--5.  Find average, maximum and minimum list price for each Product line (exclude products where Product line is NULL), sort descending by Average Standard Cost.-----
+
+SELECT  COUNT(*)
+FROM 
+	(
+	SELECT *	
+	FROM Production.Product AS P
+	WHERE P.ProductLine IS NOT NULL
+	) AS T
+GROUP BY T.ProductLine
+
+
+
+
+SELECT  MAX(P.ListPrice)
+FROM Production.Product AS P
+WHERE P.ProductLine IN 
+(    
+    SELECT  T.ProductLine
+FROM 
+	(
+	SELECT *	
+	FROM Production.Product AS P
+	WHERE P.ProductLine IS NOT NULL
+	) AS T
+GROUP BY T.ProductLine
+)
+
