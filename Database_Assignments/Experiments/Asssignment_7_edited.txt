@@ -1,0 +1,115 @@
+-------1. Show the CompanyName for James D. Kramer-----------
+SELECT  CompanyName
+FROM SalesLT.Customer
+WHERE 
+FirstName = 'JAMES' AND MiddleName = 'D.' AND LastName = 'Kramer' 
+
+-------2. Show the CompanyName for James D. Kramer-----------
+SELECT AddressType, AddressLine1, AddressLine2, City, StateProvince
+FROM 
+SalesLT.Customer AS C
+INNER JOIN SalesLT.CustomerAddress AS CA
+ON C.CustomerID = CA.CustomerID
+INNER JOIN SalesLT.Address AS A
+ON A.AddressID = CA.AddressID
+WHERE C.CompanyName = 'Modular Cycle Systems'
+
+----3. Show OrdeQty, the Name and the ListPrice of the order made by CustomerID 635 OR 30025---------
+SELECT *
+FROM SalesLT.Customer AS C
+INNER JOIN SalesLT.SalesOrderHeader AS SOH
+ON SOH.CustomerID = C.CustomerID
+INNER JOIN SalesLT.SalesOrderDetail AS SOD
+ON SOD.SalesOrderID = SOH.SalesOrderID
+INNER JOIN SalesLT.Product AS P
+ON P.ProductID = SOD.ProductID
+WHERE C.CustomerID = 30025
+
+-----4. Show the first name and the email address of customer with CompanyName 'Bike World'-------------
+SELECT C.FirstName, C.EmailAddress
+FROM SalesLT.Customer AS C
+WHERE C.CompanyName = 'Bike World'
+
+
+-----ASK ABOUT GRPING SAME RESULTS----------
+
+-----5. Show the CompanyName for all customers with an address in City 'Dallas'--------------------------
+SELECT DISTINCT C.CustomerID, C.CompanyName
+FROM SalesLT.Address AS A
+	INNER JOIN SalesLT.CustomerAddress AS CA
+		ON CA.AddressID = A.AddressID AND A.City = 'DALLAS'  ----------EDITED LINE--------------
+	INNER JOIN SalesLT.Customer AS C
+		ON CA.CustomerID = C.CustomerID
+
+	
+	
+
+-----6. How many items with ListPrice more than $1000 have been sold?-------
+SELECT COUNT(DISTINCT P.ProductID)
+FROM SalesLT.Product AS P
+INNER JOIN SalesLT.SalesOrderDetail AS SOD
+ON P.ProductID = SOD.ProductID
+WHERE P.ListPrice > 1000 
+
+------7. Give the CompanyName of those customers with orders over $100000. Include the subtotal plus tax plus freight----------
+SELECT C.CompanyName
+FROM SalesLT.Customer AS C
+INNER JOIN SalesLT.SalesOrderHeader AS SOH
+ON SOH.CustomerID = C.CustomerID
+WHERE (SOH.SubTotal+SOH.TaxAmt+SOH.Freight) > 100000
+
+-----8. Find the number of left racing socks ('Racing Socks, L') ordered by CompanyName 'Riding Cycles'-------------------------
+SELECT SOD.OrderQty
+FROM SalesLT.Product AS P
+INNER JOIN SalesLT.SalesOrderDetail AS SOD
+ON SOD.ProductID = P.ProductID
+INNER JOIN SalesLT.SalesOrderHeader AS SOH
+ON SOH.SalesOrderID = SOD.SalesOrderID
+INNER JOIN SalesLT.Customer AS C
+ON SOH.CustomerID = C.CustomerID
+WHERE C.CompanyName = 'Riding Cycles' AND P.Name = 'Racing Socks, L'
+
+SELECT *
+FROM SalesLT.Product AS P
+INNER JOIN SalesLT.SalesOrderDetail AS SOD
+ON SOD.ProductID = P.ProductID
+INNER JOIN SalesLT.SalesOrderHeader AS SOH
+ON SOH.SalesOrderID = SOD.SalesOrderID
+INNER JOIN SalesLT.Customer AS C
+ON SOH.CustomerID = C.CustomerID
+GROUP BY C.CompanyName
+
+
+-----“Single Item Order” is a customer order where only one item is ordered. Show the SalesOrderID and the UnitPrice for every Single Item Order---------
+SELECT SOD.SalesOrderID, SOD.UnitPrice
+FROM SalesLT.SalesOrderDetail AS SOD
+WHERE SOD.SalesOrderID IN 
+(
+SELECT SOD.SalesOrderID
+FROM SalesLT.SalesOrderDetail AS SOD
+GROUP BY SOD.SalesOrderID
+HAVING COUNT(*) = 1
+)
+
+
+
+----Show the product description for culture ‘fr’ for product with ProductID 736.----
+SELECT PD.Description
+FROM SalesLT.Product AS P
+INNER JOIN SalesLT.ProductModel AS PM
+ON PM.ProductModelID = P.ProductModelID
+INNER JOIN SalesLT.ProductModelProductDescription AS PMD
+ON PMD.ProductModelID = pm.ProductModelID
+INNER JOIN SalesLT.ProductDescription AS PD
+ON  PD.ProductDescriptionID  = PMD.ProductDescriptionID
+WHERE P.ProductID = 736
+
+
+
+----------6.How many items that have'nt sold been sold?------------
+
+SELECT COUNT(*)
+FROM SalesLT.Product AS P
+LEFT JOIN SalesLT.SalesOrderDetail AS SOD
+ON P.ProductID = SOD.ProductID
+WHERE SOD.SalesOrderID IS NULL
