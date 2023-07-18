@@ -10,7 +10,6 @@ FROM SalesLT.SalesOrderDetail AS SOD
 		ON C.CustomerID = SOH.CustomerID
 	GROUP BY SOD.SalesOrderID, SOH.SubTotal,C.CompanyName
 
-
 ---2. How many products in ProductCategory ‘Cranksets’ have been sold to an address in ‘London’?-------
 SELECT *
 FROM SalesLT.ProductCategory AS PC
@@ -28,8 +27,6 @@ FROM SalesLT.ProductCategory AS PC
 	INNER JOIN SalesLT.Address AS A
 		ON A.AddressID = CA.AddressID
 			AND A.City = 'LONDON'
-
-
 
 ----3.For every customer with a ‘Main Office’ in Dallas show AddressLine1 of the ‘Main Office’ and AddressLine1 of the ‘Shipping’ address - if there is no shipping address leave it blank. Use one row per customer.---
 
@@ -69,20 +66,9 @@ FROM SalesLT.SalesOrderDetail AS SOD
 		ON P.ProductID = SOD.ProductID
 GROUP BY SalesOrderID
 
-----5.Show the best selling item by value.
------FIRT METHOD
-SELECT p2.Name, p2.ProductID
-FROM(
-SELECT TOP (1) P.ProductID, SUM(SOD.OrderQty*(P.ListPrice- P.StandardCost)) AS 'Profit', SUM (SOD.OrderQty) AS 'TEST'
-FROM SalesLT.Product AS P
-	INNER JOIN SalesLT.SalesOrderDetail AS SOD
-		ON P.ProductID = SOD.ProductID
-	GROUP BY P.ProductID
-	ORDER BY Profit DESC ) AS sub
-	INNER JOIN SalesLT.Product AS p2
-		ON p2.ProductID = sub.ProductID
 
-------MODIFIED METHOD
+----5.Show the best selling item by value.
+
 SELECT TOP (1) P.ProductID, P.Name, SUM(SOD.OrderQty*(P.ListPrice- P.StandardCost)) AS 'Profit', SUM (SOD.OrderQty) AS 'NUMBER OF ITEM SOLD'
 FROM SalesLT.Product AS P
 	INNER JOIN SalesLT.SalesOrderDetail AS SOD
@@ -106,25 +92,6 @@ FROM SalesLT.SalesOrderHeader AS soh
 	ORDER BY  CountOfEachCity DESC
 
 ---B.  most profitable city 
-
------WE CAN'T USE THIS BECOZ, THIS METHOD IS JUST FINDING THE PRODUCT THAT HAS MADE MORE PROFIT. THE CUSTOMER CAN BUY MULTIPLE PRODUCTS.
------ALSO THIS BEST SELLING PRODUCT CAN BY BUYED BY ONE OR MORE CUSTOMER. SO THERE WILL BE MULTIPLE CITIES.
-
------TO FIND THE CITY THAT SPEND MORE MONEY, WE NEED TO GROUP THE SalesOrderID  IN THE SalesOrderDetail EACH 
------SalesOrderID HAS DIFFERENT PRODUCT AND DIFFERENT ORDERQTY
---SELECT TOP (1) P.ProductID, P.Name, SUM(SOD.OrderQty*(P.ListPrice- P.StandardCost)) AS 'Profit', SUM (SOD.OrderQty) AS 'TEST'
---FROM SalesLT.Product AS P
---	INNER JOIN SalesLT.SalesOrderDetail AS SOD
---		ON P.ProductID = SOD.ProductID
---	GROUP BY SOD.SalesOrderID
---	ORDER BY Profit DESC 
-
-------SALES ORDER DETAILS MADE BY EACH CUSTOMER. SOME CUSTOMER ORDERED SO MANY PRODUCTS. SO WE NEED TO GROUP THEM ALL.  
-------AND BEFORE GROUPING FIND THE AMOUNT BY MULTIPLYING EACH PRODUCT PRICE AND ORDERQTY---- 
-
-
-----!!!!!ORIGINAL ANSWER!!!!!!!--------------------------------------
-
 SELECT TOP (1) WITH TIES
 		SOD.SalesOrderID, COUNT(SOD.OrderQty) AS 'NoOfProducts',
 		SUM(P.ListPrice*SOD.OrderQty) AS 'Amount_Spented_By_City', A.City
@@ -142,35 +109,10 @@ FROM SalesLT.Product AS P
 	GROUP BY SOD.SalesOrderID, C.CustomerID,A.City
 	ORDER BY Amount_Spented_By_City DESC
 
-
-
---SELECT 
---		SOD.SalesOrderID, COUNT(SOD.OrderQty) AS 'NoOfProducts',
---		SUM((P.ListPrice- P.StandardCost)*SOD.OrderQty) AS 'FromAbove', A.City
---FROM SalesLT.Product AS P
---	INNER JOIN SalesLT.SalesOrderDetail AS SOD
---		ON P.ProductID = SOD.ProductID
---	INNER JOIN SalesLT.SalesOrderHeader AS SOH
---		ON SOH.SalesOrderID = SOD.SalesOrderID
---	INNER JOIN SalesLT.Customer AS C
---		ON C.CustomerID = SOH.CustomerID
---	INNER JOIN SalesLT.CustomerAddress AS CA
---		ON CA.CustomerID = C.CustomerID
---	INNER JOIN SalesLT.Address AS A
---		ON A.AddressID = CA.AddressID
---	GROUP BY SOD.SalesOrderID, C.CustomerID,A.City
---	ORDER BY FromAbove DESC
-
-
 ---C.  which hasn't placed any orders
 SELECT DISTINCT A.City
 FROM SalesLT.Address AS A
 	LEFT JOIN SalesLT.SalesOrderHeader AS SOH
 		ON SOH.ShipToAddressID = A.AddressID
 	WHERE SOH.SalesOrderID IS NULL
-
-
-	
-
-
 
