@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CQ-Harikrishnan\\source\\repos\\ConsoleApp_14\\ConsoleApp_14.csproj",
+      "projectUniqueName": "C:\\Users\\CQ-Harikrishnan\\Repo\\ControlQore_Internship-2\\C# Assignments\\Assignment_6_Jul_14\\ConsoleApp_14.csproj",
       "projectName": "ConsoleApp_14",
-      "projectPath": "C:\\Users\\CQ-Harikrishnan\\source\\repos\\ConsoleApp_14\\ConsoleApp_14.csproj",
+      "projectPath": "C:\\Users\\CQ-Harikrishnan\\Repo\\ControlQore_Internship-2\\C# Assignments\\Assignment_6_Jul_14\\ConsoleApp_14.csproj",
       "packagesPath": "C:\\Users\\CQ-Harikrishnan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CQ-Harikrishnan\\source\\repos\\ConsoleApp_14\\obj\\",
+      "outputPath": "C:\\Users\\CQ-Harikrishnan\\Repo\\ControlQore_Internship-2\\C# Assignments\\Assignment_6_Jul_14\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\CQ-Harikrishnan\\AppData\\Roaming\\NuGet\\NuGet.Config",
