@@ -1,0 +1,15 @@
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.csproj.AssemblyReference.cache
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.AssemblyInfoInputs.cache
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.AssemblyInfo.cs
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.csproj.CoreCompileInputs.cache
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\bin\Debug\net6.0\July_19_Traingle.exe
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\bin\Debug\net6.0\July_19_Traingle.deps.json
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\bin\Debug\net6.0\July_19_Traingle.runtimeconfig.json
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\bin\Debug\net6.0\July_19_Traingle.dll
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\bin\Debug\net6.0\July_19_Traingle.pdb
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.dll
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\refint\July_19_Traingle.dll
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.pdb
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\July_19_Traingle.genruntimeconfig.cache
+C:\Users\CQ-Harikrishnan\source\repos\July_19_Traingle\obj\Debug\net6.0\ref\July_19_Traingle.dll
