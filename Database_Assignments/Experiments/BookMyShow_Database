@@ -1,0 +1,1171 @@
+CREATE TABLE Place
+	(
+		Place_Id INT  IDENTITY(1,1),
+		[Name] VARCHAR(60),
+		CONSTRAINT PK_Place_Id PRIMARY KEY(Place_Id)
+	)
+
+
+CREATE TABLE movies
+	(
+		Movie_Id INT  IDENTITY(1,1),
+		[Name] VARCHAR(60),
+		CONSTRAINT PK_movies_Id PRIMARY KEY(Movie_Id)
+	)
+
+
+CREATE TABLE [language]
+	(
+		language_Id INT  IDENTITY(1,1),
+		[Language] VARCHAR(60) NOT NULL,
+		CONSTRAINT PK_language_Id PRIMARY KEY(language_Id)
+	)
+
+CREATE TABLE genre
+	(
+		genre_Id INT  IDENTITY(1,1),
+		genre_Name VARCHAR(60) NOT NULL,
+		CONSTRAINT PK_genre_Id PRIMARY KEY(genre_Id)
+	)
+
+CREATE TABLE MovieGenre
+	(
+		MovieGenre_Id INT  IDENTITY(1,1),
+		Movie_Id INT NOT NULL,
+		genre_Id INT NOT NULL,
+		CONSTRAINT FK_MovieGenre_movie FOREIGN KEY(Movie_Id) REFERENCES movies(Movie_Id),
+		CONSTRAINT FK_MovieGenre_genre FOREIGN KEY(genre_Id) REFERENCES genre(genre_Id),
+		CONSTRAINT PK_MovieGenre_Id PRIMARY KEY(MovieGenre_Id),
+	)
+
+
+CREATE TABLE MovieLanguage
+	(
+		MovieLanguage_Id INT  IDENTITY(1,1),
+		Movie_Id INT NOT NULL,
+		Language_Id INT NOT NULL,
+		CONSTRAINT FK_MovieLanguage_movies FOREIGN KEY(Movie_Id) REFERENCES movies(Movie_Id),
+		CONSTRAINT FK_MovieLanguage_Language FOREIGN KEY(Language_Id) REFERENCES [language](language_Id),
+		CONSTRAINT PK_MovieLanguage_Id PRIMARY KEY(MovieLanguage_Id),
+	)
+
+
+
+
+CREATE TABLE ProjectionType
+	(
+		Projection_Id INT  IDENTITY(1,1),
+		[Name] VARCHAR(60) NOT NULL,
+		CONSTRAINT PK_Projection_Id PRIMARY KEY(Projection_Id)
+	)
+
+CREATE TABLE theater
+	(
+		Theater_Id INT  IDENTITY(1,1),
+		[Name] VARCHAR(60) NOT NULL,
+		Projection_Id INT NOT NULL,
+		Place_Id INT NOT NULL,
+		CONSTRAINT FK_theater_Place FOREIGN KEY(Place_Id) REFERENCES Place(Place_Id),
+		CONSTRAINT FK_theater_PProjectionType FOREIGN KEY(Projection_Id) REFERENCES ProjectionType(Projection_Id),
+		CONSTRAINT PK_theater_Id PRIMARY KEY(Theater_Id),
+	)
+
+
+
+CREATE TABLE Screen
+	(
+		Screen_Id INT  IDENTITY(1,1),
+		Screen_No INT NOT NULL,
+		Theatre_Id INT NOT NULL,
+		CONSTRAINT FK_Screen_theater FOREIGN KEY(Theatre_Id) REFERENCES theater(Theater_Id),
+		CONSTRAINT PK_Screen_Id PRIMARY KEY(Screen_Id)
+	)
+
+
+----CHANGED PROJECTION ID TO THE TABLE SCREEN---------------------
+ALTER TABLE Theater
+DROP CONSTRAINT FK_theater_PProjectionType
+ALTER TABLE Theater
+DROP COLUMN Projection_Id
+
+ALTER TABLE Screen
+ADD Projection_Id INT
+CONSTRAINT FK_Screen_ProjectionType FOREIGN KEY (Projection_Id)
+REFERENCES ProjectionType(Projection_Id)
+
+---///////////////////////////////////////////////////////////////////-------------------------
+
+EXEC sp_rename 'dbo.Screen.Screen_No', 'Screen_Name', 'COLUMN'
+ALTER TABLE Screen
+ALTER COLUMN Screen_Name VARCHAR(60)
+
+
+
+CREATE TABLE SeatCategory
+	(
+		Seat_Category_Id INT  IDENTITY(1,1),
+		[Name] VARCHAR(60) NOT NULL,
+		Price INT NOT NULL,
+		CONSTRAINT PK_Seat_Category_Id PRIMARY KEY(Seat_Category_Id)
+	)
+
+CREATE TABLE Seat
+	(
+		Seat_Id INT  IDENTITY(1,1),
+		Screen_Id INT NOT NULL,
+		Seat_Category_Id INT NOT NULL,
+		CONSTRAINT PK_Seat_Id PRIMARY KEY(Seat_Id),
+		CONSTRAINT FK_Seat_Screen FOREIGN KEY(Screen_Id) REFERENCES Screen(Screen_Id),
+		CONSTRAINT FK_Seat_SeatCategory FOREIGN KEY(Seat_Category_Id) REFERENCES SeatCategory(Seat_Category_Id)
+	)
+
+ALTER TABLE Seat
+ADD Seat_Name VARCHAR(60)
+
+CREATE TABLE Show
+	(
+		Show_Id INT  IDENTITY(1,1),
+		Screen_Id INT NOT NULL,
+		MovieLanguage_Id INT NOT NULL,
+		[DateTime] DATETIME NOT NULL,
+		CONSTRAINT PK_Show_Id PRIMARY KEY(Show_Id),
+		CONSTRAINT FK_Show_Screen FOREIGN KEY(Screen_Id) REFERENCES Screen(Screen_Id),
+		CONSTRAINT FK_Show_MovieLanguage FOREIGN KEY(MovieLanguage_Id) REFERENCES MovieLanguage(MovieLanguage_Id)
+	)
+
+CREATE TABLE PaymentOptions
+	(
+		PaymentOptions_Id INT  IDENTITY(1,1),
+		PaymentType VARCHAR(60) NOT NULL,
+		[Description] VARCHAR(100) NOT NULL,
+		CONSTRAINT PK_PaymentOptions_Id PRIMARY KEY(PaymentOptions_Id),
+	)
+
+CREATE TABLE Customer
+	(
+		Customer_Id INT  IDENTITY(1,1),
+		[Name] VARCHAR(60) NOT NULL,
+		Email VARCHAR(60) NOT NULL,
+		Mobile INT NOT NULL,
+		CONSTRAINT PK_Customer_Id PRIMARY KEY(Customer_Id),
+	)
+ALTER TABLE Customer
+ALTER COLUMN Mobile VARCHAR(60)
+
+CREATE TABLE Ticket
+	(
+		Ticket_Id INT  IDENTITY(1,1),
+		Customer_Id INT,
+		PaymentOptions_Id INT,
+		Show_Id INT,
+		CONSTRAINT PK_Ticket_Id PRIMARY KEY(Ticket_Id),
+		CONSTRAINT FK_Ticket_Customer FOREIGN KEY(Customer_Id) REFERENCES Customer(Customer_Id),
+		CONSTRAINT FK_Ticket_PaymentOptions FOREIGN KEY(PaymentOptions_Id) REFERENCES PaymentOptions(PaymentOptions_Id),
+		CONSTRAINT FK_Ticket_Show FOREIGN KEY (Show_Id) REFERENCES Show(Show_Id)
+	)
+
+ALTER TABLE Ticket
+ADD Total INT
+ALTER TABLE Ticket
+DROP COLUMN Total
+
+
+CREATE TABLE TicketSeat
+	(
+		TicketSeat_Id INT  IDENTITY(1,1),
+		Seat_Id INT NOT NULL,
+		TicketId INT NOT NULL,
+		CONSTRAINT PK_TicketSeat_Id PRIMARY KEY(TicketSeat_Id),
+		CONSTRAINT FK_TicketSeat_Seat FOREIGN KEY(Seat_Id) REFERENCES Seat(Seat_Id),
+		CONSTRAINT FK_TicketSeat_Ticket FOREIGN KEY(TicketId) REFERENCES Ticket(Ticket_Id)
+	)
+  
+
+
+CREATE PROCEDURE placeInsertTable
+@name VARCHAR(60)
+AS 
+BEGIN
+    INSERT INTO Place([Name])
+	VALUES (@name)
+END 
+GO
+
+
+
+EXEC placeInsertTable @name = 'Trivandrum'
+EXEC placeInsertTable @name = 'Attinkal'
+EXEC placeInsertTable @name = 'Kollam'
+EXEC placeInsertTable @name = 'Kottarakkara'
+EXEC placeInsertTable @name = 'Adoor'
+EXEC placeInsertTable @name = 'Chenganasheri'
+EXEC placeInsertTable @name = 'Alapppuzha'
+EXEC placeInsertTable @name = 'Cherthala'
+EXEC placeInsertTable @name = 'Thiruvalla'
+EXEC placeInsertTable @name = 'Pala'
+EXEC placeInsertTable @name = 'Ponkunnam'
+EXEC placeInsertTable @name = 'Idukki'
+EXEC placeInsertTable @name = 'Kattappana'
+EXEC placeInsertTable @name = 'Muvattupuzha'
+EXEC placeInsertTable @name = 'Kochi'
+EXEC placeInsertTable @name = 'Ernakulam'
+EXEC placeInsertTable @name = 'Kakkanad'
+EXEC placeInsertTable @name = 'Thrissur'
+EXEC placeInsertTable @name = 'Palakkad'
+EXEC placeInsertTable @name = 'Kozhikode'
+EXEC placeInsertTable @name = 'Kottayam'
+
+
+CREATE PROCEDURE languageInsertTable
+@lang VARCHAR(60)
+AS 
+BEGIN
+    INSERT INTO [language]([Language])
+	VALUES (@lang)
+END 
+GO
+
+EXEC languageInsertTable 
+	@lang = 'Malayalam'
+EXEC languageInsertTable 
+	@lang = 'Tamil'
+EXEC languageInsertTable 
+	@lang = 'Telungu'
+EXEC languageInsertTable 
+	@lang = 'Hindi'
+EXEC languageInsertTable 
+	@lang = 'English'
+
+
+CREATE PROCEDURE genreInsertTable
+@gen VARCHAR(60)
+AS 
+BEGIN
+    INSERT INTO genre(genre_Name)
+	VALUES (@gen)
+END 
+GO
+
+EXEC genreInsertTable
+	@gen = 'Horror'
+EXEC genreInsertTable
+	@gen = 'Drama'
+EXEC genreInsertTable
+	@gen = 'Romance'
+EXEC genreInsertTable
+	@gen = 'Thriller'
+EXEC genreInsertTable
+	@gen = 'Action'
+EXEC genreInsertTable
+	@gen = 'Comedy'
+EXEC genreInsertTable
+	@gen = 'Sci-Fi'
+EXEC genreInsertTable
+	@gen = 'Fiction'
+EXEC genreInsertTable
+	@gen = 'Fantasy'
+EXEC genreInsertTable
+	@gen = 'Crime'
+
+
+
+----Type Table for GenreTable, LangTable----------
+CREATE TYPE genLis AS TABLE
+( GENID INT)
+CREATE TYPE lanLis AS TABLE 
+(LANID INT)
+
+----------Stored Procedure for inserting Movie Name, MovieLanguage, MovieGenre-------------
+GO
+CREATE PROCEDURE MovieInsert
+@name VARCHAR (60),
+@genNEW AS genLis READONLY,
+@lanNEW AS lanLis READONLY
+
+AS
+BEGIN 
+	INSERT INTO movies([Name])
+	SELECT @name
+
+	DECLARE @MOVIEIDSCOPE INT = SCOPE_IDENTITY()
+	
+	INSERT INTO MovieGenre(Movie_Id,genre_Id)
+	SELECT @MOVIEIDSCOPE, GENID FROM @genNEW
+
+	INSERT INTO MovieLanguage(Movie_Id, Language_Id)
+	SELECT @MOVIEIDSCOPE, LANID FROM @lanNEW
+END
+---//////////////////////////////////////////////////////////////////////////-----------------
+
+---Inserting Values--------------------------------------
+DECLARE @genTEMP AS genLis
+INSERT @genTEMP
+SELECT 4 
+UNION ALL
+SELECT 5 
+UNION ALL
+SELECT 6 
+UNION ALL
+SELECT 1  
+--UNION ALL
+--SELECT 9
+
+DECLARE @lanTEMP AS lanLis
+INSERT @lanTEMP
+SELECT 2 
+UNION ALL
+SELECT 3 
+UNION ALL
+SELECT 3 
+--UNION 4
+--SELECT ALL 
+
+EXEC MovieInsert
+	@name = 'Don',
+	@genNEW = @genTEMP,
+	@lanNEW = @lanTEMP
+
+----//////////////////////////////////////////////////////////------------------------------
+
+------------WHILE ENTERING LANG AND GENRE, ERROR OCCURED DUE TO ENTERING INVALID LANG ID( BECOZ GENID AND LANDID INTERCHANGED)----------
+--DECLARE @movFORDELETING INT = SCOPE_IDENTITY()
+--DELETE 
+--FROM MovieLanguage
+--WHERE Movie_Id = @movFORDELETING
+--DELETE 
+--FROM MovieGenre
+--WHERE Movie_Id =  @movFORDELETING
+--DELETE FROM
+--movies WHERE Movie_Id =  @movFORDELETING
+
+--DROP  PROCEDURE MovieInsert
+
+
+
+-------SeatCategory_Name and Price-----------
+GO
+CREATE PROCEDURE seatCatInsert
+@name VARCHAR(60),
+@Price INT
+AS
+BEGIN
+	INSERT INTO SeatCategory([Name],Price)
+	SELECT @name, @Price
+END
+
+EXEC seatCatInsert
+	@name = 'Silver',
+	@Price = 100
+EXEC seatCatInsert
+	@name = 'Gold',
+	@Price = 150
+EXEC seatCatInsert
+	@name = 'Platinum',
+	@Price = 180
+EXEC seatCatInsert
+	@name = 'Reclainer',
+	@Price = 300
+
+---/////////////////////////////////////////////////////////--------------------------------
+
+-------SP FOR Projection_Type-----------
+GO
+CREATE PROCEDURE projectTYpeInsert
+@name VARCHAR(60)
+AS
+BEGIN
+	INSERT INTO ProjectionType([Name])
+	SELECT @name
+END
+GO
+
+EXEC projectTYpeInsert
+	@name = 'IMAX'
+EXEC projectTYpeInsert
+	@name = '4K'
+EXEC projectTYpeInsert
+	@name = 'RGB LASER'
+EXEC projectTYpeInsert
+	@name = '2K'
+-------------------------------------------------------------------------------------------------
+----SP_FOR ENTERING THEATER DETAILS--------------------------------------------------------------
+
+CREATE TYPE SEAT AS TABLE
+( 
+  screenName varchar(60),
+  seat_name varchar(60),
+  seat_cat INT
+  )
+
+drop type SEAT
+
+CREATE TYPE SCREEN AS TABLE
+( screen_name VARCHAR(60),
+  projection INT
+)
+
+
+GO
+CREATE PROCEDURE theaterInsert
+@name VARCHAR(60),
+@place INT,
+@Screens AS SCREEN READONLY,
+@Seats AS SEAT READONLY
+AS
+BEGIN
+
+INSERT INTO theater([Name], Place_Id)
+SELECT @name, @place
+
+DECLARE @temp_theatreID INT = SCOPE_IDENTITY()
+
+DECLARE @inserted TABLE      
+( ScreenID	INT,
+  Screen_Name VARCHAR(60))
+    
+
+INSERT INTO Screen(Screen_Name, Theatre_Id, Projection_Id)
+OUTPUT inserted.Screen_Id, inserted.Screen_Name INTO @inserted
+SELECT screen_name, @temp_theatreID, projection FROM @Screens
+
+INSERT INTO Seat(Screen_Id, Seat_Name ,Seat_Category_Id)
+SELECT ScreenID, Seat_Name, seat_cat 
+FROM @Seats AS S
+	INNER JOIN @inserted as I
+		ON I.Screen_Name = S.screenName
+
+END
+
+
+
+DECLARE @tempSEAT AS SEAT
+	INSERT INTO @tempSEAT
+		SELECT	'SCREEN-1', 'A1', 1 
+		UNION ALL
+		SELECT	'SCREEN-1', 'A2', 1
+		UNION ALL
+		SELECT	'SCREEN-1', 'A3', 1 
+		UNION ALL
+		SELECT	'SCREEN-1', 'B1', 2 
+		UNION ALL
+		SELECT	'SCREEN-1', 'B2', 2 
+		UNION ALL
+		SELECT	'SCREEN-1', 'B3', 2 
+		UNION ALL
+		SELECT	'SCREEN-1', 'C1', 3 
+		UNION ALL
+		SELECT	'SCREEN-1', 'C1', 3 
+		UNION ALL
+		SELECT	'SCREEN-2', 'A1', 1 
+		UNION ALL
+		SELECT	'SCREEN-2', 'A2', 1
+		UNION ALL
+		SELECT	'SCREEN-2', 'A3', 1 
+		UNION ALL
+		SELECT	'SCREEN-2', 'B1', 2 
+		UNION ALL
+		SELECT	'SCREEN-2', 'B2', 2 
+		UNION ALL
+		SELECT	'SCREEN-2', 'B3', 2 
+		UNION ALL
+		SELECT	'SCREEN-2', 'C1', 2 
+		UNION ALL
+		SELECT	'SCREEN-2', 'C1', 2
+		UNION ALL
+		SELECT	'SCREEN-3', 'A1', 3 
+		UNION ALL
+		SELECT	'SCREEN-3', 'A2', 3
+		UNION ALL
+		SELECT	'SCREEN-3', 'A3', 3 
+		UNION ALL
+		SELECT	'SCREEN-3', 'B1', 3 
+		UNION ALL
+		SELECT	'SCREEN-3', 'B2', 3 
+		UNION ALL
+		SELECT	'SCREEN-3', 'B3', 3 
+		UNION ALL
+		SELECT	'SCREEN-3', 'C1', 3 
+		UNION ALL
+		SELECT	'SCREEN-3', 'C1', 3 
+		
+DECLARE @tempSCREEN AS SCREEN
+	INSERT INTO @tempSCREEN
+		SELECT 'SCREEN-1', 97
+		UNION ALL
+		SELECT 'SCREEN-2', 100
+		UNION ALL
+		SELECT 'SCREEN-3', 97
+		
+
+EXEC theaterInsert
+	@name = 'UGM',
+	@place = 21,
+	@Screens = @tempSCREEN,
+	@Seats = @tempSEAT
+
+-------------/////////////////THEATER-2/////////////////////////---------
+
+DECLARE @tempSEAT AS SEAT
+	INSERT INTO @tempSEAT
+		SELECT	'AUDI-1', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-1', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-1', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-1', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-1', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-2', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-2', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-2', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-2', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'C1', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'C1', 2
+		UNION ALL
+		SELECT	'AUDI-3', 'A1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'A2', 3
+		UNION ALL
+		SELECT	'AUDI-3', 'A3', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B2', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B3', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'C1', 3
+		UNION ALL
+		SELECT	'AUDI-4', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-4', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-4', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-4', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-4', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-5', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-5', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-5', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-5', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-5', 'C1', 3 
+
+		
+DECLARE @tempSCREEN AS SCREEN
+	INSERT INTO @tempSCREEN
+		SELECT 'AUDI-1', 97
+		UNION ALL
+		SELECT 'AUDI-2', 100
+		UNION ALL
+		SELECT 'AUDI-3', 100
+		UNION ALL
+		SELECT 'AUDI-4', 98
+		UNION ALL
+		SELECT 'AUDI-5', 98
+		
+
+EXEC theaterInsert
+	@name = 'PVR',
+	@place = 1,
+	@Screens = @tempSCREEN,
+	@Seats = @tempSEAT
+		
+
+		-------------/////////////////THEATER-3/////////////////////////---------
+
+DECLARE @tempSEAT AS SEAT
+	INSERT INTO @tempSEAT
+		SELECT	'AUDI-1', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-1', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-1', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-1', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-1', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-2', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-2', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-2', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-2', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'C1', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'C1', 2
+		UNION ALL
+		SELECT	'AUDI-3', 'A1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'A2', 3
+		UNION ALL
+		SELECT	'AUDI-3', 'A3', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B2', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B3', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'C1', 3
+		UNION ALL
+		SELECT	'AUDI-4', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-4', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-4', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-4', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-4', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-5', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-5', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-5', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-5', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-5', 'C1', 3 
+
+		
+DECLARE @tempSCREEN AS SCREEN
+	INSERT INTO @tempSCREEN
+		SELECT 'AUDI-1', 97
+		UNION ALL
+		SELECT 'AUDI-2', 100
+		UNION ALL
+		SELECT 'AUDI-3', 100
+		UNION ALL
+		SELECT 'AUDI-4', 98
+		UNION ALL
+		SELECT 'AUDI-5', 98
+		
+
+EXEC theaterInsert
+	@name = 'Abhilash',
+	@place = 15,
+	@Screens = @tempSCREEN,
+	@Seats = @tempSEAT
+
+	-------------/////////////////THEATER-4/////////////////////////---------
+
+DECLARE @tempSEAT AS SEAT
+	INSERT INTO @tempSEAT
+		SELECT	'AUDI-1', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-1', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-1', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-1', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-1', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-1', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-2', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-2', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-2', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-2', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'C1', 2 
+		UNION ALL
+		SELECT	'AUDI-2', 'C1', 2
+		UNION ALL
+		SELECT	'AUDI-3', 'A1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'A2', 3
+		UNION ALL
+		SELECT	'AUDI-3', 'A3', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B2', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'B3', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-3', 'C1', 3
+		UNION ALL
+		SELECT	'AUDI-4', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-4', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-4', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-4', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-4', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-4', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-5', 'A1', 1 
+		UNION ALL
+		SELECT	'AUDI-5', 'A2', 1
+		UNION ALL
+		SELECT	'AUDI-5', 'A3', 1 
+		UNION ALL
+		SELECT	'AUDI-5', 'B1', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'B2', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'B3', 2 
+		UNION ALL
+		SELECT	'AUDI-5', 'C1', 3 
+		UNION ALL
+		SELECT	'AUDI-5', 'C1', 3 
+
+		
+DECLARE @tempSCREEN AS SCREEN
+	INSERT INTO @tempSCREEN
+		SELECT 'AUDI-1', 97
+		UNION ALL
+		SELECT 'AUDI-2', 100
+		UNION ALL
+		SELECT 'AUDI-3', 100
+		UNION ALL
+		SELECT 'AUDI-4', 98
+		UNION ALL
+		SELECT 'AUDI-5', 98
+		
+
+EXEC theaterInsert
+	@name = 'ANAND',
+	@place = 1,
+	@Screens = @tempSCREEN,
+	@Seats = @tempSEAT
+
+----/////////////////////////////////////////////////////////////////////////------------------------------------------
+
+----SP FOR CHARTING A SHOW BY THEATER---------------------------------------
+GO
+CREATE PROCEDURE movieCharting
+@screenId INT,
+@movielang INT,
+@showtime DATETIME
+AS
+BEGIN
+
+INSERT INTO Show(Screen_Id,MovieLanguage_Id, [DateTime])
+SELECT @screenId, @movielang, @showtime
+END
+GO
+
+DROP PROCEDURE movieCharting
+
+EXEC movieCharting
+	@screenId = 10,
+	@movielang =15,
+	@showtime = '2023-07-25 10:00 AM'
+
+EXEC movieCharting
+	@screenId = 12,
+	@movielang =7,
+	@showtime = '2023-07-25 02:00 PM'
+
+EXEC movieCharting
+	@screenId = 10,
+	@movielang =15,
+	@showtime = '2023-07-25 07:00 PM'
+
+EXEC movieCharting
+	@screenId = 10,
+	@movielang =15,
+	@showtime = '2023-07-25 09:00 PM'
+
+EXEC movieCharting
+	@screenId = 11,
+	@movielang = 8,
+	@showtime = '2023-07-25 10:00 AM'
+
+EXEC movieCharting
+	@screenId = 11,
+	@movielang = 8,
+	@showtime = '2023-07-25 02:00 PM'
+
+EXEC movieCharting
+	@screenId = 11,
+	@movielang = 8,
+	@showtime = '2023-07-25 07:00 PM'
+
+EXEC movieCharting
+	@screenId = 11,
+	@movielang = 8,
+	@showtime = '2023-07-25 09:00 PM'
+
+---///////////////////////////////////////////////////////------------------------
+--SP FOR STORING CUSTOMER DETAILS-------------------------------------------
+
+GO
+CREATE PROCEDURE insertingCustomer
+@name VARCHAR(60),
+@email VARCHAR(60),
+@mob VARCHAR(60)
+AS
+BEGIN
+
+INSERT INTO Customer([Name], Email, Mobile)
+SELECT @name, @email, @mob
+END
+GO
+
+
+DROP PROCEDURE insertingCustomer
+
+EXEC insertingCustomer
+	@name = 'HARIKRISHNAN',
+	@email = 'haripm.krishnan@gmail.com',
+	@mob = '9567347662'
+
+EXEC insertingCustomer
+	@name = 'JOHN WICK',
+	@email = 'wickkan@gmail.com',
+	@mob = '95673474345'
+
+EXEC insertingCustomer
+	@name = 'CILIAN MURPHY',
+	@email = 'MURPHY@gmail.com',
+	@mob = '9567343445'
+
+EXEC insertingCustomer
+	@name = 'VOLDEMORT',
+	@email = 'VOLDE@gmail.com',
+	@mob = '9567323445'
+
+
+EXEC insertingCustomer
+	@name = 'SEVERURS SNAPE',
+	@email = 'HALFBLOODPRINCE@gmail.com',
+	@mob = '9567333265'
+
+---/////////////////////////////////////////////////////////////////////////////////----------------------------
+-------SP FOR INSERTING PAYMENTOPTIONS--------------------------------------------------------------------------
+GO
+CREATE PROCEDURE insertPaymentOption
+@type VARCHAR(60),
+@des VARCHAR(100)
+AS
+BEGIN 
+INSERT INTO PaymentOptions(PaymentType,[Description])
+SELECT @type, @des
+END
+GO
+
+EXEC insertPaymentOption
+	@type = 'UPI',
+	@des = 'UPI DESCRIPTION'
+
+EXEC insertPaymentOption
+	@type = 'CARD',
+	@des = 'CARD DESCRIPTION'
+
+EXEC insertPaymentOption
+	@type = 'NET BANKING',
+	@des = 'BANKING DESCRIPTION'
+
+EXEC insertPaymentOption
+	@type = 'WALLET',
+	@des = 'WALLET DESCRIPTION'
+
+-----////////////////////////////////////////////////////////////////////////--------------------------------------------------
+----------SP FOR INSERTING TICKET DETAILS(BOOKING TICKETS) QUESTION NUMBER. 4  --------------------------------------------------------------------------------------
+
+CREATE TYPE ticketSeat AS TABLE
+( seatID INT)
+GO
+
+CREATE PROCEDURE TicketBooking
+@cusId INT,
+@paymentId INT,
+@showId INT,
+@multipleSeats AS ticketSeat READONLY
+AS
+BEGIN
+
+INSERT INTO Ticket(Customer_Id,PaymentOptions_Id,Show_Id)
+SELECT @cusId, @paymentId, @showId
+
+DECLARE @tickId INT = SCOPE_IDENTITY()
+
+INSERT INTO TicketSeat(Seat_Id, TicketId)
+SELECT seatID, @tickId FROM @multipleSeats
+
+END
+GO
+
+DROP PROCEDURE TicketBooking
+
+DECLARE @SeatSelection AS ticketSeat
+INSERT INTO @SeatSelection
+	SELECT 27
+	UNION ALL
+	SELECT 28
+	UNION ALL
+	SELECT 29
+	UNION ALL
+	SELECT 30
+	UNION ALL
+	SELECT 31
+	UNION ALL
+	SELECT 32
+
+EXEC TicketBooking
+	@cusId = 2,
+	@paymentId = 1,
+	@showId = 6,
+	@multipleSeats = @SeatSelection
+
+--/////////////////////////////////////////////////////////////////////////----------------
+---SP FOR SHOWING MOVIES WITH SPECIFIC LANG, WITH SPECIFIC GENRE, AT A SPECIFIC PLACE------------
+--CREATE TYPE genLis AS TABLE
+--( GENID INT)                              ------//////----USING THESE TABLE TYPES HERE ALSO
+--CREATE TYPE lanLis AS TABLE 
+--(LANID INT)
+
+CREATE PROCEDURE moviesBylangPlaceGen
+@lang AS lanLis READONLY,
+@genre AS genLis READONLY,
+@plac INT
+AS
+BEGIN
+
+SELECT  DISTINCT M.Name
+FROM theater AS T
+INNER JOIN Screen AS S
+	ON S.Theatre_Id = T.Theater_Id AND  Place_Id = @plac
+INNER JOIN Show AS SHW
+	ON SHW.Screen_Id = S.Screen_Id
+INNER JOIN MovieLanguage AS ML
+	ON ML.MovieLanguage_Id = SHW.MovieLanguage_Id AND ML.Language_Id IN (SELECT LANID FROM @lang)
+INNER JOIN MovieGenre AS MG
+	ON MG.Movie_Id = ML.Movie_Id AND MG.genre_Id IN (SELECT GENID FROM @genre)
+INNER JOIN movies AS M
+	ON M.Movie_Id = MG.Movie_Id
+WHERE CAST(SHW.DateTime AS DATE) = GETDATE()
+
+
+END
+GO
+
+DROP PROCEDURE moviesBylangPlaceGen
+
+DECLARE @selectedGenre AS genLis
+INSERT INTO @selectedGenre
+SELECT 4
+UNION ALL
+SELECT 5
+
+DECLARE @selectedLanguages AS lanLis
+INSERT INTO @selectedLanguages
+SELECT 2
+UNION ALL
+SELECT 3
+
+EXEC moviesBylangPlaceGen
+	@lang = @selectedLanguages, --Tamil
+	@plac = 21, --Kottayam
+	@genre = @selectedGenre   --Thriller
+
+
+
+
+-------////////////////////////////////////////////////////////////////////////////////////////------------------------------
+---SP FOR  GetShowDetails-------------------------------
+GO
+CREATE PROCEDURE  GetShowDetails
+@lang INT,
+@movID INT
+AS
+BEGIN
+
+SELECT SHW.Screen_Id,SHW.DateTime, T.Name, P.Name
+FROM SHOW AS SHW
+	INNER JOIN MovieLanguage AS ML
+		ON ML.MovieLanguage_Id = SHW.MovieLanguage_Id AND ML.Movie_Id = @movID AND ML.Language_Id = @lang
+	INNER JOIN Screen AS SCN
+		ON SCN.Screen_Id = SHW.Screen_Id
+	INNER JOIN theater AS T
+		ON T.Theater_Id = SCN.Theatre_Id
+	INNER JOIN Place P
+		ON P.Place_Id = T.Place_Id
+END
+GO
+
+EXEC GetShowDetails
+	@lang = 2,
+	@movID =9
+
+---///////////////////////////////////////////////////////////////--------------
+---SP FOR GetSeatInfoByShowId--------------------------------------------------
+
+GO
+
+CREATE PROCEDURE GetSeatInfoByShowId
+@shwID INT
+AS
+BEGIN
+
+--SELECT ST.Seat_Id, 'Booked' AS'Booking Status'
+--FROM Show AS SHW
+--	INNER JOIN Seat AS ST
+--		ON ST.Screen_Id = SHW.Screen_Id AND SHW.Show_Id = @shwID
+--	WHERE EXISTS
+--	(SELECT * 
+--	 FROM TicketSeat AS TS
+--	 WHERE TS.Seat_Id = ST.Seat_Id)
+--UNION ALL
+
+--SELECT ST.Seat_Id, 'Not Booked' AS'Booking Status'
+--FROM Show AS SHW
+--	INNER JOIN Seat AS ST
+--		ON ST.Screen_Id = SHW.Screen_Id AND SHW.Show_Id = @shwID
+--	WHERE NOT EXISTS
+--	(SELECT * 
+--	 FROM TicketSeat AS TS
+--	 WHERE TS.Seat_Id = ST.Seat_Id)
+
+SELECT *--ST.Seat_Id, 'Not Booked' AS'Booking Status'
+FROM Show AS SHW
+	INNER JOIN Seat AS ST
+		ON ST.Screen_Id = SHW.Screen_Id AND SHW.Show_Id = 3 --@shwID
+	LEFT JOIN TicketSeat AS TS
+		ON TS.Seat_Id = ST.Seat_Id
+	WHERE TS.TicketId IS NULL
+
+END
+GO
+
+DROP PROCEDURE GetSeatInfoByShowId
+
+EXEC GetSeatInfoByShowId
+	@shwID = 3
+
+--///////////////////////////////////////////////////////////////////////-----------
+
+------SP to get booked ticket details---------------------------
+GO
+CREATE PROCEDURE bookedTicket
+@ticketId INT
+
+AS
+BEGIN
+
+SELECT DISTINCT TS.Seat_Id, MO.Name, LAN.Language, TTR.Name, SAC.Name
+FROM Ticket AS T
+	INNER JOIN TicketSeat AS TS
+		ON T.Ticket_Id = TS.TicketId AND T.Ticket_Id = @ticketId
+	INNER JOIN Seat AS ST
+		ON ST.Seat_Id = TS.Seat_Id
+	INNER JOIN Show AS SHW
+		ON SHW.Show_Id = T.Show_Id
+	INNER JOIN SeatCategory AS SAC
+		ON SAC.Seat_Category_Id = ST.Seat_Category_Id
+	INNER JOIN MovieLanguage AS ML
+		ON ML.MovieLanguage_Id = SHW.MovieLanguage_Id
+	INNER JOIN movies AS MO
+		ON MO.Movie_Id = ML.Movie_Id
+	INNER JOIN [language] AS LAN
+		ON LAN.language_Id = ML.Language_Id
+	INNER JOIN Screen AS SCR
+		ON SCR.Screen_Id = SHW.Screen_Id
+	INNER JOIN theater AS TTR
+		ON TTR.Theater_Id = SCR.Theatre_Id
+END
+GO
+
+
+EXEC bookedTicket
+	@ticketId = 12
+
+---////////////////////////////////////////////////////---------------------------
+--CALCULATING PRICE---------------------------------------------------------------
+
+SELECT SUM(SC.Price)
+FROM TicketSeat AS TS
+	INNER JOIN Seat AS S
+		ON S.Seat_Id = TS.Seat_Id
+	INNER JOIN SeatCategory AS SC
+		ON SC.Seat_Category_Id = S.Seat_Category_Id
+	WHERE TS.TicketId = 12
+	
