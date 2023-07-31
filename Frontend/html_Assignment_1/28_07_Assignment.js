@@ -62,8 +62,8 @@ console.log(everyAbove18);
 
 
 const JohnDepartment = Arr.filter(student => student.FirstName === "John");
-const Dep = JohnDepartment.map(student => student.Department);
-console.log(Dep);
+const Dep = JohnDepartment.find(student => student.Department);
+console.log(Dep["Department"]);
 
 
 }
