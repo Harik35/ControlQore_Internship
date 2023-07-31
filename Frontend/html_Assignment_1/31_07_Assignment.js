@@ -109,8 +109,9 @@ console.log(Arr.findIndex(x => x.MovieName === "City of Shadows"));
 
 
 console.log("Answer of 10th question");
-console.log(Arr.findIndex(x => x.MovieName === "Love and Destiny"))
-    Arr.splice(Arr.findIndex(x => x.MovieName === "Love and Destiny")+1,	0,{
+var indexOfLOD = Arr.findIndex(x => x.MovieName === "Love and Destiny");
+console.log(indexOfLOD);
+    Arr.splice(indexOfLOD+1,	0,{
       "MovieName": "Rich & Poor",
       "ActorName": "Johnie Walker",
       "ReleaseDate": "2023-08-11"
@@ -118,10 +119,13 @@ console.log(Arr.findIndex(x => x.MovieName === "Love and Destiny"))
   console.log(Arr);
 
 //12. Insert an element as next 
-console.log("Answer of 12th question");
-console.log(Arr.findIndex(x => x.MovieName === "The Last Stand"))
-    Arr.splice(Arr.findIndex(x => x.MovieName === "The Last Stand"),1);
-  console.log(Arr);
+/*console.log("Answer of 12th question");
+var indexOfElement = Arr.findIndex(x => x.MovieName === "The Last Stand");
+console.log(indexOfElement);
+    Arr.splice(indexOfElement,1);
+    console.log(Arr);*/
+
+
 
 
 
