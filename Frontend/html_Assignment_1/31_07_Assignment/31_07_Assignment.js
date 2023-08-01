@@ -30,6 +30,11 @@ function movies()
           "MovieName": "Echoes of Time",
           "ActorName": "Olivia Wilson",
           "ReleaseDate": "2022-12-19"
+        },
+        {
+          "MovieName": "Love and Destiny",
+          "ActorName": "Michael Brown",
+          "ReleaseDate": "2023-05-02"
         }
       ]
       console.log("Answer of 1st question");
@@ -133,12 +138,34 @@ console.log(Arr.findIndex(x => x.MovieName === "City of Shadows"));
 
 //9. List the distinct actor names in array
 console.log("Answer of 9th question");
-  const distinctActor1 = new Set(Arr.map(movie => movie.ActorName));
-  console.log(distinctActor1.size);
+  //const distinctActor1 = new Set(Arr.map(movie => movie.ActorName));
+  //console.log(distinctActor1.size);
 
   var tempArr2 = [];
+  tempArr2.push(Arr[0]);
+  console.log(tempArr2);
+  
 
-  for(let i=0; i >Arr.length; i++ ){continue;}
+  for(let i=1; i < Arr.length; i++ )
+  {
+    var count2= 0;
+   
+    for(let j=0; j < tempArr2.length; i++)
+    {
+      if(Arr[i].ActorName === tempArr2[j].ActorName){
+        count2++
+      }
+      
+    }
+    if(count2 === 0){
+      tempArr2.push(Arr[i]);
+    }
+  }
+
+
+  tempArr2.forEach(element => {
+    console.log(element.ActorName);
+  });
 
 
 
