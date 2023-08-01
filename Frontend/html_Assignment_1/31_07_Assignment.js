@@ -94,6 +94,34 @@ console.log("Answer of 6th question");
 
   console.log(Arr);
 
+//7. Check whether there exists any duplicate movie names present in the array
+
+console.log("Answer of 7th question");
+var tempArr = [];
+for (let i = 0; i < Object.keys(Arr).length; i++) {
+  var count = 0;
+  for (let j = 0; j < Object.keys(Arr).length; j++) {
+    if (Arr[i].MovieName === Arr[j].MovieName) {
+      count++;
+    }
+    var present = tempArr.includes(Arr[i]);
+    if (count > 1 && !present) {
+      tempArr.push(Arr[i]);
+      break;
+    }
+  }
+}
+
+if(tempArr.length == 0 ){
+  console.log("No Duplicates");
+
+}
+else{
+  console.log("There are Duplicates");
+}
+console.log(tempArr.length);
+
+
 //8. Create a new array starting from the movie "City of Shadows"
 
 console.log("Answer of 8th question");
@@ -102,6 +130,10 @@ console.log(Arr.findIndex(x => x.MovieName === "City of Shadows"));
   const newArray = Arr.slice((Arr.findIndex(x => x.MovieName === "City of Shadows")));
   console.log(newArray);
 
+//9. List the distinct actor names in array
+console.log("Answer of 9th question");
+  const distinctActor1 = new Set(Arr.map(movie => movie.ActorName));
+  console.log(distinctActor1.size);
 
 
 
@@ -118,12 +150,44 @@ console.log(indexOfLOD);
   });
   console.log(Arr);
 
+
+
+
+//11.Display the count of distinct actor names in array
+  console.log("Answer of 11th question");
+  const distinctActor2 = new Set(Arr.map(movie => movie.ActorName));
+  console.log(distinctActor2);
+
 //12. Insert an element as next 
 /*console.log("Answer of 12th question");
 var indexOfElement = Arr.findIndex(x => x.MovieName === "The Last Stand");
 console.log(indexOfElement);
     Arr.splice(indexOfElement,1);
     console.log(Arr);*/
+
+
+
+//13. Check whether all the movies are released after 2021 Dec 31
+
+const flag = Arr.some(movie => movie.ReleaseDate > "2021-12-31");
+if(flag){
+  console.log("There is movies with Release date after 2021-12-31 ");
+}
+else{
+  console.log("There is no movies with Release date after 2021-12-31 ");
+}
+
+//14. Update movie named  "City of Shadows" ‘s release date as  "2023-03-13"
+console.log("Answer of 14th question");
+  var movieIndex = Arr.findIndex(movie => movie.MovieName === "City of Shadows");
+  Arr[movieIndex].ReleaseDate = "2023-03-13";
+  console.log("Changed Date of movie City of Shadows is, " + Arr[movieIndex].ReleaseDate);
+
+
+//15. Create a new array of movie names whose movie name length is greater than 10.
+  console.log("Answer of 15th question");
+  const GreaterThan10 = Arr.filter(movie => movie.MovieName.length > 10).map(movie => movie.MovieName);
+  console.log(GreaterThan10);
 
 
 
