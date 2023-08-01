@@ -150,7 +150,7 @@ console.log("Answer of 9th question");
   {
     var count2= 0;
    
-    for(let j=0; j < tempArr2.length; i++)
+    for(let j=0; j < tempArr2.length; j++)
     {
       if(Arr[i].ActorName === tempArr2[j].ActorName){
         count2++
