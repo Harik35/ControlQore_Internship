@@ -187,8 +187,13 @@ console.log(indexOfLOD);
 
 //11.Display the count of distinct actor names in array
   console.log("Answer of 11th question");
-  const distinctActor2 = new Set(Arr.map(movie => movie.ActorName));
-  console.log(distinctActor2);
+  //const distinctActor2 = new Set(Arr.map(movie => movie.ActorName));
+  //console.log(distinctActor2);
+
+  //Referring array tempArr2 from question 9,
+  var tempArr2Lenghth = tempArr2.length;
+  console.log(tempArr2Lenghth);
+
 
 //12. Insert an element as next 
 /*console.log("Answer of 12th question");
@@ -201,6 +206,7 @@ console.log(indexOfElement);
 
 //13. Check whether all the movies are released after 2021 Dec 31
 
+console.log("Answer of 13th question");
 const flag = Arr.some(movie => movie.ReleaseDate > "2021-12-31");
 if(flag){
   console.log("There is movies with Release date after 2021-12-31 ");
@@ -220,19 +226,5 @@ console.log("Answer of 14th question");
   console.log("Answer of 15th question");
   const GreaterThan10 = Arr.filter(movie => movie.MovieName.length > 10).map(movie => movie.MovieName);
   console.log(GreaterThan10);
-
-
-
-
-
- 
-
-
-    
-
-
-    
-    
-  
 
 }
