@@ -126,6 +126,22 @@ console.log(indexOfElement);
     console.log(Arr);*/
 
 
+//11.Display the count of distinct actor names in array
+  console.log("Answer of 11th question");
+  const distinctActor = new Set(Arr.map(movie => movie.ActorName));
+  console.log(distinctActor);
+
+//14. Update movie named  "City of Shadows" ‘s release date as  "2023-03-13"
+console.log("Answer of 14th question");
+  var movieIndex = Arr.findIndex(movie => movie.MovieName === "City of Shadows");
+  Arr[movieIndex].ReleaseDate = "2023-03-13";
+  console.log("Changed Date of movie City of Shadows is, " + Arr[movieIndex].ReleaseDate);
+
+
+//15. Create a new array of movie names whose movie name length is greater than 10.
+  console.log("Answer of 15th question");
+  const GreaterThan10 = Arr.filter(movie => movie.MovieName.length > 10).map(movie => movie.MovieName);
+  console.log(GreaterThan10);
 
 
 
