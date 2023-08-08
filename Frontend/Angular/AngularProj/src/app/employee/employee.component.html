@@ -1,0 +1,22 @@
+<app-employee></app-employee>
+<table>
+    <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Date-of-Birth</th>
+        <th>Age</th>
+        <th>Joining</th>
+        <th>Country</th>
+    </tr>
+    <tr *ngFor = "let emp of empdetails">
+        <td>{{empdetails.FirstName}}</td>
+        <td>{{empdetails.LastName}}</td>
+        <td>{{empdetails.Date-of-Birth}}</td>
+        <td>{{empdetails.Age}}</td>
+        <td>{{empdetails.Joining}}</td>
+        <td>{{empdetails.Country}}</td>
+    </tr>
+    
+
+</table>
+
