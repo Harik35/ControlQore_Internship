@@ -37,7 +37,7 @@ public empdetails:Array<IemployeeDetails> = [
     Age: 23,
     JoiningDate: '03/06/2023',
     Country: "India"
-  },
+  }
   
 ]
 
