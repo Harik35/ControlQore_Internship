@@ -1,9 +1,13 @@
 <style>
+    
+    body{
+       
+        font-family: Arial, sans-serif;
+    }
     table{
             
         border-radius: 50px;
         border: 2px solid #a72626;
-        
         border-collapse: collapse;
             
             
@@ -22,10 +26,22 @@
     button{
         margin: 10px;
         padding: 10px;
+        color: aliceblue;
+        font-size: larger;
+        font-family: "Lucida Console", "Courier New", monospace;
+        border-radius: 5px;
+        background-color: rgb(23, 149, 233);
+        border: 2px solid #ffffff;
+        transition: background-color 0.3s, transform 0.3s, rotate 0.3s;
+    }
+    button:hover{
+        background-color: rgb(5, 66, 107);
+        transform: scale(1.5);
     }
       
     </style>
-<h1>Employee Details</h1>
+<body>
+    <h1>Employee Details</h1>
 <table>
     <tr>
         <th>FirstName</th>
@@ -47,4 +63,5 @@
 
 
 <button (click)="boolPass()">Back</button>
+</body>
 
