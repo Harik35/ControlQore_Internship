@@ -45,10 +45,10 @@ button{
             <th>LastName</th>
             <th>Details</th>
         </tr>
-        <tr *ngFor="let emp of empdetails">
-            <td>{{emp.FirstName}}</td>
-            <td>{{emp.LastName}}</td>
-            <td *ngIf="empvariable"><button (click)="BoolFunc(emp)">Details</button></td>
+        <tr *ngFor="let i of emp">
+            <td>{{i.FirstName}}</td>
+            <td>{{i.LastName}}</td>
+            <td *ngIf="empvariable"><button (click)="BoolFunc(i)">Details</button></td>
             
         </tr>
     </table>
