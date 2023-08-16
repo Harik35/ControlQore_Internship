@@ -10,22 +10,18 @@ import { TestService } from 'src/app/test.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.sass']
 })
-export class DetailsComponent implements OnInit{
-  public employeeDetail?: IemployeeDetails;
-  public empId: number = 0;
-  public emplist: Array<IemployeeDetails> = [];
+export class DetailsComponent{
+ 
   @Output() newItemEvent2 = new EventEmitter<boolean>();
   
   
-  constructor (private empService: TestService, private route: ActivatedRoute, private router: Router){
-    this.emplist  = this.empService.empdetails
-  }
+  
     
   
   boolPass()
   {
-    this.router.navigate(['./employee']);
-    //this.newItemEvent2.emit(false);
+    
+    this.newItemEvent2.emit(false);
   }
 
 
