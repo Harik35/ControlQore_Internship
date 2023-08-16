@@ -14,11 +14,14 @@ export class EmployeeComponent {
   @Output() newItemEvent = new EventEmitter<IemployeeDetails>();
   empvariable = true;
 
-  public emp: Array<IemployeeDetails> = []
+  public emp: Array<IemployeeDetails> = [];
+  public empForm: Array<IemployeeDetails> = [];
+  public empForm2: Array<IemployeeDetails> = [];
 
 
   constructor(private empService: TestService, private router: Router) {
     this.emp = empService.empdetails;
+    this.empForm = this.empService.empdetails;
   }
 
   passEmpToDetails(emp: IemployeeDetails){
@@ -28,6 +31,11 @@ export class EmployeeComponent {
     
     //this.empvariable = false;
     //this.newItemEvent.emit(emp);
+  }
+
+  filterEmployeesByName(nameFilter: string) {
+    this.empForm2 = this.empForm.filter(empForm =>empForm.FirstName.toLowerCase().includes(nameFilter.toLowerCase()));
+    console.log(this.empForm2);
   }
  
 
