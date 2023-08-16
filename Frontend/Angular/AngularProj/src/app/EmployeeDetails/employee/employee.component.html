@@ -48,7 +48,7 @@ button{
         <tr *ngFor="let i of emp">
             <td>{{i.FirstName}}</td>
             <td>{{i.LastName}}</td>
-            <td *ngIf="empvariable"><button (click)="BoolFunc(i)">Details</button></td>
+            <td ><button (click)="passEmpToDetails(i)">Details</button></td>
             
         </tr>
     </table>

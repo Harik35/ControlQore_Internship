@@ -17,14 +17,14 @@ export class EmployeeComponent {
   public emp: Array<IemployeeDetails> = []
 
 
-  constructor(private empService: TestService, private router: Router,
-    private activatedRoute: ActivatedRoute) {
+  constructor(private empService: TestService, private router: Router) {
     this.emp = empService.empdetails;
   }
 
-  BoolFunc(emp: IemployeeDetails){
+  passEmpToDetails(emp: IemployeeDetails){
     
-    this.router.navigate([`./${emp.Id}`])
+    console.log(emp.Id);
+    this.router.navigate([`${emp.Id}/details`]);
     
     //this.empvariable = false;
     //this.newItemEvent.emit(emp);

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IemployeeDetails } from './iemployee-details';
 
 @Component({
@@ -7,6 +8,10 @@ import { IemployeeDetails } from './iemployee-details';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
+
+  constructor(private router: Router){
+
+  }
   
   tempvariable3 = false;
   tempvariable2?: IemployeeDetails;
@@ -21,6 +26,10 @@ export class AppComponent {
     
     this.tempvariable3 = value;
 
+  }
+
+  GoToEmployee(){
+    this.router.navigate(['./employee'])
   }
 
   title = 'AngularProj';
