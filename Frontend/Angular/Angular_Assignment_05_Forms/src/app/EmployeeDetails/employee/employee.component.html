@@ -54,7 +54,7 @@ button{
     </table>
 
     <div>
-        <form (ngSubmit)="filterEmployeesByName(nameFilter.value)">
+        <form (ngSubmit)="filterEmployeesByName('')">
           <label for="nameFilter">Name:</label>
           <input type="text"   name="searchText" />
           <button type="submit">Filter</button>
