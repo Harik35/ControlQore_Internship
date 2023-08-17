@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EmployeeApplication2.props" />
+</Project>
