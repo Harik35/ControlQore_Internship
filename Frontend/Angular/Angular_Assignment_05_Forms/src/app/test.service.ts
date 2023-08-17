@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IemployeeDetails } from './iemployee-details';
+import { IdeptDetails } from './idept-details';
 
 
 @Injectable({
@@ -51,6 +52,7 @@ export class TestService {
     }
     
   ]
+  depdetail: Array<IdeptDetails> = []
 
   constructor() { }
 }

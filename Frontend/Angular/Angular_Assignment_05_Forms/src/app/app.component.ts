@@ -28,9 +28,7 @@ export class AppComponent {
 
   }
 
-  GoToEmployee(){
-    this.router.navigate(['./employee'])
-  }
+  
 
   title = 'AngularProj';
 }

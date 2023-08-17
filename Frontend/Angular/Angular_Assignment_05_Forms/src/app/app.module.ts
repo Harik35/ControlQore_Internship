@@ -6,11 +6,19 @@ import { AppComponent } from './app.component';
 import { EmployeeComponent } from './EmployeeDetails/employee/employee.component';
 import { DetailsComponent } from './EmployeeDetails/details/details.component';
 import { EmployeeDetailsModule } from './EmployeeDetails/employee-details.module';
+import { HomeComponent } from './home/home.component';
+import { DepartmentComponent } from './department/department.component';
+import { DeptListComponent } from './Department/dept-list/dept-list.component';
+import { DeptDetailsComponent } from './Department/dept-details/dept-details.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent],
+    AppComponent,
+    HomeComponent,
+    DepartmentComponent,
+    DeptListComponent,
+    DeptDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
