@@ -22,5 +22,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&display=swap" rel="stylesheet">
 <h1>Welcome to EmployeeDetails</h1>
 
+<form [formGroup]="searchForm">
+    <input formControlName="searchInput" (input)="onSearchInput()"/>
+</form>
+
 <button (click)="GoToEmployee()">Employee Details</button>
 <button (click)="GoToDepartment()">Department Details</button>
