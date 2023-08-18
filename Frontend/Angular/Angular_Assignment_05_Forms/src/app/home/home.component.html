@@ -15,17 +15,46 @@
         background-color: rgb(5, 66, 107);
         transform: scale(1.2);
     }
+    h1{
+        color:#0b3080;
+        font-size: larger;
+        font-family: 'Handjet', cursive;
+        
+    }
+    label{
+        display: block;
+        margin-bottom: 10px;
+    }
+    input{
+        display: block;
+        margin-bottom: 10px;
+    }
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&display=swap" rel="stylesheet">
-<h1>Welcome to EmployeeDetails</h1>
+<h1>Home Component</h1>
 
-<form (ngSubmit)="onSubmission()">
+<form [formGroup]="searchFormGrp"    (ngSubmit)="onSubmi()">
+    <label >Id: </label>
+    <input formControlName="searchFormId"/>
+    <label >First Name: </label>
+    <input formControlName="searchFormFirstName"/>
+    <label >Last Name: </label>
+    <input formControlName="searchFormLastName"/>
+    <label >Date of Birth: </label>
+    <input formControlName="searchFormCtrl"/>
+    <label >Age: </label>
+    <input formControlName="searchFormCtrl"/>
+    <label >Joining Date: </label>
+    <input formControlName="searchFormCtrl"/>
+    <label >Country: </label>
     <input formControlName="searchFormCtrl"/>
     <button type="submit">Submit</button>
+ 
 </form>
+
 
 
 

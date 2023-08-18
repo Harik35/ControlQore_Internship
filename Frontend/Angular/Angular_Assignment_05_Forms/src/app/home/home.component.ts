@@ -14,26 +14,27 @@ import { FormControl, FormGroup} from '@angular/forms';
 
 export class HomeComponent {
 
- 
+  searchFormGrp = new FormGroup({ searchFormCtrl: new FormControl('')});
+
   constructor(private router: Router) {
  }
  @Output() searchElement = new EventEmitter<string>();
 
-searchFormCtrl = new FormControl('');
+
 
   GoToEmployee(){
     this.router.navigate(['./employee']);
   }
 
   GoToDepartment(){
-    this.router.navigate(['./dept'])
+    this.router.navigate(['./dept']);
   }
   
-  onSubmission(){
+  onSubmi(){
   //   this.myGroup = new FormGroup({
   //     searchFormCtrl: new FormControl()
   // });
-    console.log(this.searchFormCtrl);
+  console.log(this.searchFormGrp.value);
   }
   
 
