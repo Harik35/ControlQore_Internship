@@ -16,27 +16,24 @@ export class EmployeeComponent {
 
   public emp: Array<IemployeeDetails> = [];
   public empForm: Array<IemployeeDetails> = [];
-  public empForm2: Array<IemployeeDetails> = [];
+  
 
 
   constructor(private empService: TestService, private router: Router) {
     this.emp = empService.empdetails;
-    this.empForm = this.empService.empdetails;
+    
   }
 
   passEmpToDetails(emp: IemployeeDetails){
     
-    console.log(emp.Id);
+    console.log(emp);
     this.router.navigate([`${emp.Id}/details`]);
     
     //this.empvariable = false;
     //this.newItemEvent.emit(emp);
   }
 
-  filterEmployeesByName(nameFilter: string) {
-    this.empForm2 = this.empForm.filter(empForm =>empForm.FirstName.toLowerCase().includes(nameFilter.toLowerCase()));
-    console.log(this.empForm2);
-  }
+ 
  
 
 

@@ -1,9 +1,13 @@
 export interface IemployeeDetails {
-    Id: number,
-    FirstName: string;
-    LastName: string;
-    DateofBirth: string;
-    Age: number;
-    JoiningDate: string;
-    Country: string;
+    Id: number | null | undefined;
+    FirstName: string | null | undefined;
+    LastName: string | null | undefined;
+    DateofBirth: string | null | undefined ;
+    Age: number | null | undefined;
+    JoiningDate: string | null | undefined ;
+    Country: string | null | undefined;
 }
+
+
+
+

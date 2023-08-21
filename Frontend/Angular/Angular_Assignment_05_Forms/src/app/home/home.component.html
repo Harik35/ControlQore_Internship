@@ -36,7 +36,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&display=swap" rel="stylesheet">
 <h1>Home Component</h1>
 
-<form [formGroup]="searchFormGrp"    (ngSubmit)="onSubmi()">
+<form [formGroup]="searchFormGrp"    (ngSubmit)="onSubmit()">
     <label >Id: </label>
     <input formControlName="searchFormId"/>
     <label >First Name: </label>
@@ -44,13 +44,13 @@
     <label >Last Name: </label>
     <input formControlName="searchFormLastName"/>
     <label >Date of Birth: </label>
-    <input formControlName="searchFormCtrl"/>
+    <input formControlName="searchFormDOB"/>
     <label >Age: </label>
-    <input formControlName="searchFormCtrl"/>
+    <input formControlName="searchFormAge"/>
     <label >Joining Date: </label>
-    <input formControlName="searchFormCtrl"/>
+    <input formControlName="searchFormJOD"/>
     <label >Country: </label>
-    <input formControlName="searchFormCtrl"/>
+    <input formControlName="searchFormCountry"/>
     <button type="submit">Submit</button>
  
 </form>

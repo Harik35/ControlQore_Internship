@@ -20,11 +20,13 @@ export class DetailsComponent implements OnInit{
   ngOnInit(): void {
     const id: string = this.route.snapshot.params['id'];
     this.empId = Number(id);
-    this.empDetails = this.empList.find((emp) => emp.Id === this.empId);
+    this.empDetails = this.empList.find((X) => X.Id == this.empId);
+    console.log(this.empId);
+    console.log(this.empDetails);
 }
 
 backButton(){
-  console.log("clicked");
+  
   this.router.navigate(['/']);}
 
 }
