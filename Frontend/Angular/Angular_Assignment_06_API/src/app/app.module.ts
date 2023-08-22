@@ -8,19 +8,21 @@ import { HomeComponent } from './home/home.component';
 import { DeptListComponent } from './Department/dept-list/dept-list.component';
 import { DeptDetailsComponent } from './Department/dept-details/dept-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     DeptListComponent,
+    HomeComponent,
     DeptDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     EmployeeDetailsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -36,28 +36,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&display=swap" rel="stylesheet">
 <h1>Home Component</h1>
 
-<form [formGroup]="searchFormGrp"    (ngSubmit)="onSubmit()">
-    <label >Id: </label>
-    <input formControlName="searchFormId"/>
+<form [formGroup]="inputFormGrp"    (ngSubmit)="onSubmit()">
     <label >First Name: </label>
-    <input formControlName="searchFormFirstName"/>
+    <input formControlName="inputFirstName"/>
     <label >Last Name: </label>
-    <input formControlName="searchFormLastName"/>
-    <label >Date of Birth: </label>
-    <input formControlName="searchFormDOB"/>
-    <label >Age: </label>
-    <input formControlName="searchFormAge"/>
-    <label >Joining Date: </label>
-    <input formControlName="searchFormJOD"/>
-    <label >Country: </label>
-    <input formControlName="searchFormCountry"/>
+    <input formControlName="inputLastName"/>
+    <label >Email: </label>
+    <input formControlName="inputEmail"/>
+    <label >Phone: </label>
+    <input formControlName="inputPhone"/>
+    <label >DepartmentId: </label>
+    <input formControlName="inputDep" type="number"/>
     <button type="submit">Submit</button>
- 
 </form>
-
+<form [formGroup]="seacrhById"    (ngSubmit)="getDataById()">
+    <label >SearchId:</label>
+    <input formControlName="searchFormId"/>
+    <button type="submit">Submit</button>
+</form>
 
 
 
 
 <button (click)="GoToEmployee()">Employee Details</button>
 <button (click)="GoToDepartment()">Department Details</button>
+<button (click)="getAllData()">Get All Details</button>

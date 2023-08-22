@@ -13,20 +13,9 @@ export class AppComponent {
 
   }
   
-  tempvariable3 = false;
-  tempvariable2?: IemployeeDetails;
 
-  addItem (emp: IemployeeDetails){
-    this.tempvariable2 = emp;
-    this.tempvariable3 = true;
-    console.log(emp);
 
-  }
-  addItem2 (value: boolean){
-    
-    this.tempvariable3 = value;
-
-  }
+ 
 
   
 

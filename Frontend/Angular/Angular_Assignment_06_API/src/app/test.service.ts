@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
 import { IemployeeDetails } from './iemployee-details';
 import { IdeptDetails } from './idept-details';
+import { Istudent } from './istudent';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+
+
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TestService {
+
+  constructor(private http: HttpClient) { }
 
   empdetails:Array<IemployeeDetails> = [
     {
@@ -52,7 +61,19 @@ export class TestService {
     }
     
   ]
-  depdetail: Array<IdeptDetails> = []
 
-  constructor() { }
+  baseUrl: string = 'https://localhost:7104';
+
+  addEmployee(stud: Istudent){
+    return this.http.post(`${this.baseUrl}/api/Employee/AddEmployee`, stud);
+  }
+ 
+  getEmployee():Observable<Array<Istudent>>{
+    return this.http.get<Array<Istudent>>(`${this.baseUrl}/api/Employee/Getalldata`);
+  }
+
+  getEmployeeById(Id: number){
+   
+  }
+
 }
