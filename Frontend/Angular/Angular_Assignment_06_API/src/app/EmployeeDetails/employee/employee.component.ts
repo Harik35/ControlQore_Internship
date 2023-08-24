@@ -12,17 +12,23 @@ import { Istudentreturn } from 'src/app/istudent-return';
   styleUrls: ['./employee.component.sass']
 })
 export class EmployeeComponent {
-  @Output() newItemEvent = new EventEmitter<IemployeeDetails>();
-  empvariable = false;
+  constructor(private empService: TestService, private router: Router) {}
+  ngOnInit(): void {
+    this.empService.getEmployee().subscribe((data) => {
+      this.emp = data;});
+    }
+    
+
+  
 
   public emp: Array<Istudentreturn> = [];
   public empForm: Array<IemployeeDetails> = [];
-  constructor(private empService: TestService, private router: Router) {}
+  
 
   passEmpToDetails(emp: Istudentreturn){
     
     console.log(emp);
-    this.router.navigate([`${emp.Id}/details`]);
+    this.router.navigate([`${emp.id}/details`]);
     
     //this.empvariable = false;
     //this.newItemEvent.emit(emp);
@@ -30,14 +36,10 @@ export class EmployeeComponent {
 
   getAllData(){
     this.empService.getEmployee().subscribe((data) =>this.emp = data)
-    this.empvariable = true;
+    
+   
+  }
+  printOnConsole(){
     console.log(this.emp);
   }
-
- 
- 
-
-
-
-
 }

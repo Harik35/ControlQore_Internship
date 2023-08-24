@@ -1,10 +1,10 @@
 export interface Istudentreturn {
 
-    Id:  number | null | undefined ;
-    FirstName: string | null | undefined;
-    LastName: string | null | undefined;
-    Email: string | null | undefined ;
-    PhoneNumber: string | null | undefined;
-    DepartmentId: number | null | undefined ;
+    id:  number | null | undefined ;
+    firstName: string | null | undefined;
+    lastName: string | null | undefined;
+    email: string | null | undefined ;
+    phoneNumber: string | null | undefined;
+    departmentId: number | null | undefined ;
 
 }

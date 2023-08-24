@@ -11,51 +11,26 @@
         }
     
         
-    th,td 
-        {
-            border: 1px solid #c5bfbf;
-            padding: 10px;
-        }
-    th{
-      background-color: rgb(177, 167, 224);
-    }
-
-    button{
-        margin: 10px;
-        padding: 10px;
-        color: aliceblue;
-        font-size: larger;
-        font-family: "Lucida Console", "Courier New", monospace;
-        border-radius: 5px;
-        background-color: rgb(23, 149, 233);
-        border: 2px solid #ffffff;
-        transition: background-color 0.3s, transform 0.3s;
-    }
-    button:hover{
-        color: rgb(254, 255, 255);
-        background-color: rgb(5, 66, 107);
-        transform: scale(1.5);
-    }
+    
       
     </style>
 <body>
     <h1>Employee Details</h1>
-<table class="rounded">
+<table class="rounded" >
     <tr>
         <th>FirstName</th>
         <th>LastName</th>
-        <th>DOB</th>
-        <th>Age</th>
-        <th>JoiningDate</th>
-        <th>Country</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Department</th>
+        
     </tr>
     <tr>
-        <td>{{empDetails?.FirstName}}</td>
-        <td>{{empDetails?.LastName}}</td>
-        <td>{{empDetails?.DateofBirth}}</td>
-        <td>{{empDetails?.Age}}</td>
-        <td>{{empDetails?.JoiningDate}}</td>
-        <td>{{empDetails?.Country}}</td>
+        <td>{{empDetails?.firstName}}</td>
+        <td>{{empDetails?.lastName}}</td>
+        <td>{{empDetails?.email}}</td>
+        <td>{{empDetails?.phoneNumber}}</td>
+        <td>{{empDetails?.departmentId}}</td>
     </tr>
 </table>
 

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IemployeeDetails } from '../../iemployee-details';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestService } from 'src/app/test.service';
+import { Istudentreturn } from 'src/app/istudent-return';
 
 @Component({
   selector: 'app-details',
@@ -9,21 +9,28 @@ import { TestService } from 'src/app/test.service';
   styleUrls: ['./details.component.sass']
 })
 export class DetailsComponent implements OnInit{
-  public empDetails?: IemployeeDetails;
+  public empDetails?: Istudentreturn;
   public empId:number = 0;
-  public empList: Array<IemployeeDetails> = [];
+  public emp: Array<Istudentreturn> = [];
+  flag = false;
 
-  constructor(private empService: TestService, private route: ActivatedRoute, private router:Router){
-    this.empList = this.empService.empdetails;
+  constructor(private empService: TestService , private route: ActivatedRoute, private router:Router){
+    
   }
 
   ngOnInit(): void {
-    const id: string = this.route.snapshot.params['id'];
-    this.empId = Number(id);
-    this.empDetails = this.empList.find((X) => X.Id == this.empId);
+    this.empService.getEmployee().subscribe((data) => {
+      this.emp = data;
+      const id: string = this.route.snapshot.params['id'];
+      this.empId = Number(id);
+      this.empDetails = this.emp.find((X) => X.id == this.empId);
+    });
+    
     console.log(this.empId);
     console.log(this.empDetails);
 }
+
+
 
 backButton(){
   
