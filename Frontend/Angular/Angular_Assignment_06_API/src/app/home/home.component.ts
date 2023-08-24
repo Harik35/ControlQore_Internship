@@ -29,6 +29,10 @@ export class HomeComponent {
     this.router.navigate(['./dept']);
   }
 
+  deleteById(){
+    this.router.navigate(['./deletebyid']);
+  }
+
   student?: Istudent;
   inputFormGrp = new FormGroup(
     { 
@@ -60,9 +64,7 @@ export class HomeComponent {
     })
   }
   
-  seacrhById = new FormGroup({
-    searchFormId: new FormControl('')
-  })
+  
   getDataById(){
   }
   

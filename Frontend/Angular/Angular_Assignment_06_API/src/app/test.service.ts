@@ -73,7 +73,8 @@ export class TestService {
     return this.http.get<Array<Istudentreturn>>(`${this.baseUrl}/api/Employee/Getalldata`);
   }
 
-  getEmployeeById(Id: number){
+  deleteById(Id: number): Observable<any>{
+    return this.http.delete(`${this.baseUrl}/api/Employee/deleteById?id=${Id}`)
    
   }
 

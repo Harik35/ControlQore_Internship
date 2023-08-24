@@ -9,6 +9,7 @@ import { DeptListComponent } from './Department/dept-list/dept-list.component';
 import { DeptDetailsComponent } from './Department/dept-details/dept-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { DeleteByIdComponent } from './delete-by-id/delete-by-id.component';
 
 
 
@@ -17,7 +18,8 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
     AppComponent,
     DeptListComponent,
     HomeComponent,
-    DeptDetailsComponent],
+    DeptDetailsComponent,
+    DeleteByIdComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

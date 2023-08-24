@@ -49,11 +49,7 @@
     <input formControlName="inputDep" type="number"/>
     <button type="submit">Submit</button>
 </form>
-<form [formGroup]="seacrhById"    (ngSubmit)="getDataById()">
-    <label >SearchId:</label>
-    <input formControlName="searchFormId"/>
-    <button type="submit">Submit</button>
-</form>
+
 
 
 
@@ -61,3 +57,4 @@
 <button (click)="GoToEmployee()">Employee Details</button>
 <button (click)="GoToDepartment()">Department Details</button>
 <button (click)="getAllData()">Get All Details</button>
+<button (click)="deleteById()">Delete By Id</button>
