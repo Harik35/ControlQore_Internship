@@ -64,8 +64,6 @@ export class HomeComponent {
     searchFormId: new FormControl('')
   })
   getDataById(){
-    
-    
   }
   
 

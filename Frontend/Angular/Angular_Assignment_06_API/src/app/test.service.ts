@@ -4,6 +4,7 @@ import { IdeptDetails } from './idept-details';
 import { Istudent } from './istudent';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Istudentreturn } from './istudent-return';
 
 
 
@@ -68,8 +69,8 @@ export class TestService {
     return this.http.post(`${this.baseUrl}/api/Employee/AddEmployee`, stud);
   }
  
-  getEmployee():Observable<Array<Istudent>>{
-    return this.http.get<Array<Istudent>>(`${this.baseUrl}/api/Employee/Getalldata`);
+  getEmployee():Observable<Array<Istudentreturn>>{
+    return this.http.get<Array<Istudentreturn>>(`${this.baseUrl}/api/Employee/Getalldata`);
   }
 
   getEmployeeById(Id: number){

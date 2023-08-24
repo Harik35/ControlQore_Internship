@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IemployeeDetails } from './iemployee-details';
+
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,7 @@ import { IemployeeDetails } from './iemployee-details';
 export class AppComponent {
 
   constructor(private router: Router){
-
   }
-  
-
-
- 
-
-  
 
   title = 'AngularProj';
 }
