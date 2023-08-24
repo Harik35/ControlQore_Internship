@@ -1,0 +1,63 @@
+<style>
+    button{
+        margin: 5px;
+        padding: 5px;
+        color: aliceblue;
+        font-size: larger;
+        font-family: 'Handjet', cursive;
+        border-radius: 5px;
+        background-color: rgb(23, 149, 233);
+        border: 2px solid #0b3080;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+    button:hover{
+        color: rgb(248, 248, 248);
+        background-color: rgb(5, 66, 107);
+        transform: scale(1.2);
+    }
+    h1{
+        color:#0b3080;
+        font-size: larger;
+        font-family: 'Handjet', cursive;
+        
+    }
+    label{
+        display: block;
+        margin-bottom: 10px;
+    }
+    input{
+        display: block;
+        margin-bottom: 10px;
+    }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&display=swap" rel="stylesheet">
+<h1>Home Component</h1>
+
+<form [formGroup]="inputFormGrp"    (ngSubmit)="onSubmit()">
+    <label >First Name: </label>
+    <input formControlName="inputFirstName"/>
+    <label >Last Name: </label>
+    <input formControlName="inputLastName"/>
+    <label >Email: </label>
+    <input formControlName="inputEmail"/>
+    <label >Phone: </label>
+    <input formControlName="inputPhone"/>
+    <label >DepartmentId: </label>
+    <input formControlName="inputDep" type="number"/>
+    <button type="submit">Submit</button>
+</form>
+<form [formGroup]="seacrhById"    (ngSubmit)="getDataById()">
+    <label >SearchId:</label>
+    <input formControlName="searchFormId"/>
+    <button type="submit">Submit</button>
+</form>
+
+
+
+
+<button (click)="GoToEmployee()">Employee Details</button>
+<button (click)="GoToDepartment()">Department Details</button>
+<button (click)="getAllData()">Get All Details</button>
