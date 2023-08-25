@@ -18,7 +18,7 @@ import { TestService } from '../test.service';
 export class HomeComponent {
 
   
-  constructor(private router: Router, private studService: TestService ) {
+  constructor(private router: Router, private empService: TestService ) {
   }
 
   GoToEmployee(){
@@ -53,19 +53,14 @@ export class HomeComponent {
       Email: this.inputFormGrp.value.inputEmail,
       DepartmentId: this.inputFormGrp.value.inputDep
     }
-    this.studService.addEmployee(this.student).subscribe((data)=>{
-      console.log(data);
-    })
-  }
-
-  getAllData(){
-    this.studService.getEmployee().subscribe((data) =>{
+    this.empService.addEmployee(this.student).subscribe((data)=>{
       console.log(data);
     })
   }
   
   
   getDataById(){
+    this.router.navigate(['./getdatabyid']);
   }
   
 

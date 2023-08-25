@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'
 import { HomeComponent } from './home/home.component';
 import { DeleteByIdComponent } from './delete-by-id/delete-by-id.component';
+import { GetdatabyIDComponent } from './getdataby-id/getdataby-id.component';
  
 const routes: Routes = [{
   path: '', component: HomeComponent
@@ -14,6 +15,8 @@ const routes: Routes = [{
   path: ':id/details', component: DetailsComponent
 },{
   path: 'deletebyid', component: DeleteByIdComponent
+},{
+  path: 'getdatabyid', component: GetdatabyIDComponent
 }];
 
 @NgModule({

@@ -1,0 +1,25 @@
+<form [formGroup]="getDatByIdFormGrp"    (ngSubmit)="getdataById()">
+    <label >Get data By Id:</label>
+    <input formControlName="getdataId"/>
+    <button type="submit">Submit</button>
+</form>
+
+<table class="rounded" *ngIf="tableVisible" >
+    <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Department</th>
+        
+    </tr>
+    <tr>
+        <td>{{empDetails?.firstName}}</td>
+        <td>{{empDetails?.lastName}}</td>
+        <td>{{empDetails?.email}}</td>
+        <td>{{empDetails?.phoneNumber}}</td>
+        <td>{{empDetails?.departmentId}}</td>
+    </tr>
+</table>
+
+<button (click)="backButton()" >Back</button>
