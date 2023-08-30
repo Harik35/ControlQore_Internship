@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup} from '@angular/forms';
-import { IemployeeDetails } from 'src/app/iemployee-details';
 import { Istudent } from '../istudent';
 import { TestService } from '../test.service';
 
@@ -32,7 +31,7 @@ export class HomeComponent {
   deleteById(){
     this.router.navigate(['./deletebyid']);
   }
-
+  
   student?: Istudent;
   inputFormGrp = new FormGroup(
     { 
@@ -61,6 +60,10 @@ export class HomeComponent {
   
   getDataById(){
     this.router.navigate(['./getdatabyid']);
+  }
+
+  updateById(){
+    this.router.navigate(['./updatebyid'])
   }
   
 

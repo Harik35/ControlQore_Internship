@@ -81,4 +81,8 @@ export class TestService {
     return this.http.get<Istudentreturn>(`${this.baseUrl}/api/Employee/GetdatabyId?id=${Id}`)
   }
 
+  updateById(emp:Istudent, id: number):Observable<Object>{
+    return this.http.put(`${this.baseUrl}/api/Employee/Updatetable?id=${id}`, emp)
+  }
+
 }

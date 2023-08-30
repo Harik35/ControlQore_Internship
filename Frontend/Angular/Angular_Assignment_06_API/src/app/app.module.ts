@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { DeleteByIdComponent } from './delete-by-id/delete-by-id.component';
 import { GetdatabyIDComponent } from './getdataby-id/getdataby-id.component';
+import { UpdatebyidComponent } from './updatebyid/updatebyid.component';
 
 
 
@@ -21,7 +22,8 @@ import { GetdatabyIDComponent } from './getdataby-id/getdataby-id.component';
     HomeComponent,
     DeptDetailsComponent,
     DeleteByIdComponent,
-    GetdatabyIDComponent],
+    GetdatabyIDComponent,
+    UpdatebyidComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

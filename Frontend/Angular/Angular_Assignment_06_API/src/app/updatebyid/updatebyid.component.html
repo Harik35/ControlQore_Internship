@@ -1,0 +1,15 @@
+<form [formGroup]="updateFormGrp"    (ngSubmit)="onSubmit()">
+    <label >Id: </label>
+    <input formControlName="updateId"/>
+    <label >First Name: </label>
+    <input formControlName="inputFirstName"/>
+    <label >Last Name: </label>
+    <input formControlName="inputLastName"/>
+    <label >Email: </label>
+    <input formControlName="inputEmail"/>
+    <label >Phone: </label>
+    <input formControlName="inputPhone"/>
+    <label >DepartmentId: </label>
+    <input formControlName="inputDep" type="number"/>
+    <button type="submit">Submit</button>
+</form>
